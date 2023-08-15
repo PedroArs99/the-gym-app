@@ -2,11 +2,12 @@ service: the-gym-app
 frameworkVersion: '3'
 
 custom:
-  tableName: 'users-table-${sls:stage}'
+  excercisesTableName: 'excercises-table-${sls:stage}'
 
 provider:
   name: aws
   runtime: nodejs18.x
+  region: eu-central-1
   iam:
     role:
       statements:
@@ -19,29 +20,33 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           Resource:
-            - Fn::GetAtt: [ UsersTable, Arn ]
+            - Fn::GetAtt: [ ExcercisesTable, Arn ]
   environment:
-    USERS_TABLE: ${self:custom.tableName}
+    EXCERCISES_TABLE: ${self:custom.excercisesTableName}
 
 plugins:
   - serverless-plugin-typescript
 
 functions:
-  api:
-    handler: index.handler
+  upsertExcercise:
+    handler: functions/upsert-excercise.handler
     events:
-      - httpApi: '*'
+      - httpApi:
+          path: '/excercises'
+          method: put
 
 resources:
   Resources:
-    UsersTable:
+    ExcercisesTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: userId
+          - AttributeName: id
             AttributeType: S
         KeySchema:
-          - AttributeName: userId
+          - AttributeName: id
             KeyType: HASH
-        BillingMode: PAY_PER_REQUEST
-        TableName: ${self:custom.tableName}
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.excercisesTableName}
