@@ -28,6 +28,12 @@ plugins:
   - serverless-plugin-typescript
 
 functions:
+  deleteExcercise:
+      handler: functions/delete-excercise.handler
+      events: 
+          - httpApi:
+              path: '/excercises/{id}'
+              method: delete
   getExcercises:
       handler: functions/get-excercises.handler
       events:
