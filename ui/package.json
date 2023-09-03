@@ -41,6 +41,7 @@
 	"type": "module",
 	"dependencies": {
 		"@fortawesome/free-solid-svg-icons": "^6.4.2",
+		"axios": "^1.5.0",
 		"svelte-fa": "^3.0.4"
 	}
 }
