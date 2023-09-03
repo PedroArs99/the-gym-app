@@ -1,14 +1,29 @@
 <script lang="ts">
 	import Fa from 'svelte-fa/src/fa.svelte';
-	import { faDumbbell, faHeart, type IconDefinition } from '@fortawesome/free-solid-svg-icons';
+	import {
+	faCheck,
+	faCross,
+		faDumbbell,
+		faHeart,
+		faInfoCircle,
+		faPlus,
+		faSquareCheck,
+		faWarning,
+		type IconDefinition
+	} from '@fortawesome/free-solid-svg-icons';
 
 	export let icon: Icon;
 
-	type Icon = 'dumbbell' | 'heart';
+	type Icon = 'dumbbell' | 'error' | 'heart' | 'info' | 'plus' | 'success' | 'warning';
 
 	const icons: { [key: string]: IconDefinition } = {
 		dumbbell: faDumbbell,
-		heart: faHeart
+		error: faCross,
+		heart: faHeart,
+		info: faInfoCircle,
+		plus: faPlus,
+		success: faCheck,
+		waning: faWarning,
 	};
 </script>
 
