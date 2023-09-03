@@ -9,6 +9,8 @@
 	export let form;
 
 	let isNewModalVisible = false;
+
+	$: if (form && !form.error) isNewModalVisible = false;
 </script>
 
 <svelte:head>
@@ -41,11 +43,7 @@
 	<Icon icon="plus" />
 </button>
 
-<Dialog
-	dialogId="new-excercise-dialog"
-	isDialogOpen={isNewModalVisible}
-	on:close={() => (isNewModalVisible = false)}
->
+<Dialog dialogId="new-excercise-dialog" isDialogOpen={isNewModalVisible} on:close={() => (isNewModalVisible = false)}>
 	<form method="post" action="?/create" use:enhance>
 		<h3 class="font-bold text-lg mb-3">Add new Excercise</h3>
 
@@ -53,13 +51,7 @@
 			<Alert severity="error" message={form.error} />
 		{/if}
 
-		<input
-			type="text"
-			name="name"
-			placeholder="Name"
-			required
-			class="input input-bordered w-full"
-		/>
+		<input type="text" name="name" placeholder="Name" required class="input input-bordered w-full" />
 
 		<select name="muscle" required class="select select-bordered">
 			<option value={undefined} selected disabled>Muscle</option>
