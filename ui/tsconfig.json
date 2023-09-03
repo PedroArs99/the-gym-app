@@ -7,6 +7,8 @@
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"paths": {
+			"$excercises": ["./src/lib/modules/excercises"],
+			"$excercises/*": ["./src/lib/modules/excercises/*"],
 			"$lib": ["./src/lib"],
 			"$lib/*": ["./src/lib/*"]
 		},
