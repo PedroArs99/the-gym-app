@@ -28,6 +28,12 @@ plugins:
   - serverless-plugin-typescript
 
 functions:
+  getExcercises:
+      handler: functions/get-excercises.handler
+      events:
+          - httpApi:
+              path: '/excercises'
+              method: get
   upsertExcercise:
     handler: functions/upsert-excercise.handler
     events:
