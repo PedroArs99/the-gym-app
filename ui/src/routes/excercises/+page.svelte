@@ -7,7 +7,7 @@
 	<meta name="description" content="The list of registered excercises" />
 </svelte:head>
 
-<table class="table table-pin-rows table-pin-cols">
+<table class="table table-pin-rows">
 	<thead>
 		<tr>
 			<th>Name</th>
@@ -18,9 +18,11 @@
 	<tbody>
 		{#each data.excercises as { name, muscle }}
 			<tr>
-				<th>{ name }</th>
-				<td>{ muscle }</td>
-				<td />
+				<th>{name}</th>
+				<td>{muscle}</td>
+				<td class="float-right">
+					<button class="btn btn-warning"> Delete </button>
+				</td>
 			</tr>
 		{/each}
 	</tbody>
