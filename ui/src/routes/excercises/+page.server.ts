@@ -8,8 +8,8 @@ export async function load() {
 	const excercises = response.data;
 
 	return {
-		excercises,
-	}
+		excercises
+	};
 }
 
 export const actions = {

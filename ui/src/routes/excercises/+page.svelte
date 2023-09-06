@@ -3,7 +3,10 @@
 	import Alert from '$lib/components/Alert.svelte';
 	import Dialog from '$lib/components/Dialog.svelte';
 	import Icon from '$lib/components/Icon.svelte';
+	import type { Excercise } from '$lib/models/excercise.model.js';
 	import { Muscles } from '$lib/models/muscles.enum';
+	import axios from 'axios';
+	import { fade } from 'svelte/transition';
 
 	export let data;
 	export let form;
@@ -11,6 +14,12 @@
 	let isNewModalVisible = false;
 
 	$: if (form && !form.error) isNewModalVisible = false;
+
+	async function deleteExcercise(id: string) {
+		await axios.delete(`/excercises/${id}`);
+
+		data.excercises = data.excercises.filter((e: Excercise) => e.id !== id);
+	}
 </script>
 
 <svelte:head>
@@ -27,12 +36,12 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each data.excercises as { name, muscle }}
-			<tr>
+		{#each data.excercises as { id, name, muscle }}
+			<tr transition:fade>
 				<th>{name}</th>
 				<td>{muscle}</td>
 				<td class="float-right">
-					<button class="btn btn-warning"> Delete </button>
+					<button class="btn btn-warning" on:click={() => deleteExcercise(id)}> Delete </button>
 				</td>
 			</tr>
 		{/each}
