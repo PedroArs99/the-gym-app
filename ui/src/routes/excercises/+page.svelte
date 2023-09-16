@@ -27,6 +27,8 @@
 	<meta name="description" content="The list of registered excercises" />
 </svelte:head>
 
+<h1 class="page-title">Excercises</h1>
+
 <table class="table table-pin-rows">
 	<thead>
 		<tr>
