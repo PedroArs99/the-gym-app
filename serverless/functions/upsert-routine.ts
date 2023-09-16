@@ -13,7 +13,7 @@ module.exports.handler = async (event: HttpRequest) => {
 
   if (!routine.id) {
     routine.id = uuidv4();
-    routine.createdAt = new Date();
+    routine.createdAt = new Date().toISOString();
   }
 
   const params = {
