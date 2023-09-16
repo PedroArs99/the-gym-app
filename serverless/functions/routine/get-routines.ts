@@ -1,8 +1,8 @@
-import { HttpRequest } from "../models/http-request.model";
+import { HttpRequest } from "../../models/http-request.model";
 import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
-import { Routine } from "../models/routine.model";
-import { dateLocale, dateFormatOptions } from "../config/date-format.config";
+import { Routine } from "../../models/routine.model";
+import { dateLocale, dateFormatOptions } from "../../config/date-format.config";
 
 const ROUTINES_TABLE = process.env.ROUTINES_TABLE;
 const client = new DynamoDBClient();

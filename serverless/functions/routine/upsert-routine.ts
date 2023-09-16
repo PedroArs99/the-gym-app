@@ -1,8 +1,8 @@
-import { HttpRequest } from "../models/http-request.model";
+import { HttpRequest } from "../../models/http-request.model";
 import { v4 as uuidv4 } from "uuid";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
-import { Routine } from "../models/routine.model";
+import { Routine } from "../../models/routine.model";
 
 const ROUTINES_TABLE = process.env.ROUTINES_TABLE;
 const client = new DynamoDBClient();

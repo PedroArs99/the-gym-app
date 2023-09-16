@@ -31,6 +31,26 @@ plugins:
   - serverless-plugin-typescript
 
 functions:
+  # Routines
+  getRoutines:
+    handler: functions/routine/get-routines.handler
+    events:
+        - httpApi:
+            path: '/routines'
+            method: get
+  getRoutineById:
+      handler: functions/routine/get-routine-by-id.handler
+      events:
+        - httpApi:
+            path: '/routines/{id}'
+            method: get
+  upsertRoutine:
+    handler: functions/routine/upsert-routine.handler
+    events:
+      - httpApi:
+          path: '/routines'
+          method: put
+  # Excercises
   deleteExcercise:
       handler: functions/delete-excercise.handler
       events: 
@@ -43,24 +63,13 @@ functions:
           - httpApi:
               path: '/excercises'
               method: get
-  getRoutines:
-      handler: functions/get-routines.handler
-      events:
-          - httpApi:
-              path: '/routines'
-              method: get
   upsertExcercise:
     handler: functions/upsert-excercise.handler
     events:
       - httpApi:
           path: '/excercises'
           method: put
-  upsertRoutine:
-    handler: functions/upsert-routine.handler
-    events:
-      - httpApi:
-          path: '/routines'
-          method: put
+
 
 resources:
   Resources:

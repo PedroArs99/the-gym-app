@@ -1,5 +1,4 @@
 import { API_URL } from '$env/static/private';
-import type { Routine } from '$lib/models/routine.model';
 import { fail } from '@sveltejs/kit';
 import axios from 'axios';
 

@@ -8,7 +8,6 @@ const dynamoDbClient = DynamoDBDocumentClient.from(client);
 
 module.exports.handler = async (event: HttpRequest) => {
   try {
-    console.log(event);
     const excerciseId = event.pathParameters["id"];
 
     const params = {

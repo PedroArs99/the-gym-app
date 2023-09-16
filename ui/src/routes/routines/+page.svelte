@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
 	import Alert from '$lib/components/Alert.svelte';
 	import Dialog from '$lib/components/Dialog.svelte';
 	import Icon from '$lib/components/Icon.svelte';
-	import type { Routine } from '$lib/models/routine.model.js';
-	import axios from 'axios';
 	import { fade } from 'svelte/transition';
 
 	export let data;
@@ -12,10 +11,8 @@
 
 	let isNewModalVisible = false;
 
-	async function deleteRoutine(id: string) {
-		await axios.delete(`/excercises/${id}`);
-
-		data.routines = data.routines.filter((r: Routine) => r.id !== id);
+	function openRoutineDetails(id: string) {
+		goto(`/routines/${id}`)
 	}
 </script>
 
@@ -36,12 +33,10 @@
 	</thead>
 	<tbody>
 		{#each data.routines as { id, name, createdAt }}
-			<tr transition:fade>
-				<th>{name}</th>
-				<th>{createdAt}</th>
-				<td class="float-right">
-					<button class="btn btn-warning" on:click={() => deleteRoutine(id)}> Delete </button>
-				</td>
+			<tr transition:fade class="hover" on:click={() => openRoutineDetails(id)}>
+				<td>{name}</td>
+				<td>{createdAt}</td>
+				<td class="float-right"></td>
 			</tr>
 		{/each}
 	</tbody>
@@ -51,7 +46,7 @@
 	<Icon icon="plus" />
 </button>
 
-<Dialog dialogId="new-excercise-dialog" isDialogOpen={isNewModalVisible} on:close={() => (isNewModalVisible = false)}>
+<Dialog dialogId="new-routine-dialog" isDialogOpen={isNewModalVisible} on:close={() => (isNewModalVisible = false)}>
 	<form method="post" action="?/create" use:enhance>
 		<h3 class="font-bold text-lg mb-3">Add new Routine</h3>
 
@@ -64,3 +59,9 @@
 		<button class="btn btn-primary w-full">Save</button>
 	</form>
 </Dialog>
+
+<style lang="postcss">
+	.hover {
+		cursor: pointer;
+	}
+</style>
