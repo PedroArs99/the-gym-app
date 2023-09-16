@@ -42,6 +42,12 @@ functions:
           - httpApi:
               path: '/excercises'
               method: get
+  getRoutine:
+      handler: functions/get-routine.handler
+      events:
+          - httpApi:
+              path: '/routines'
+              method: get
   upsertExcercise:
     handler: functions/upsert-excercise.handler
     events:
