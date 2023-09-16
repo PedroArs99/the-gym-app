@@ -18,11 +18,17 @@ module.exports.handler = async (event: HttpRequest) => {
 
     const items = queryResult.Items ?? [];
 
-    const response = items?.map((item) => ({
-      id: item.id.S,
-      name: item.name.S,
-      muscle: item.muscle.S,
-    }));
+    const response = items
+      .map((item) => ({
+        id: item.id.S!,
+        name: item.name.S!,
+        muscle: item.muscle.S!,
+      }))
+      .sort((a, b) =>
+        a.muscle.localeCompare(b.muscle) !== 0
+          ? a.muscle.localeCompare(b.muscle)
+          : a.name.localeCompare(b.name)
+      );
 
     return {
       statusCode: 200,
