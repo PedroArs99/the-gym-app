@@ -21,12 +21,12 @@ export const actions = {
 			const response = {
 				data: {
 					id: '82da9e04-9c71-4e47-b0d6-6e97a5c0a9df',
-					name: 'September 2023 - Just stay fit'
+					createdAt: new Date(),
+					name: 'September 2023 - Just stay fit',
 				}
 			};
 
 			
-
 			return response.data;
 		} else {
 			return fail(400, {
