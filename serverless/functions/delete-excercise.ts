@@ -1,4 +1,4 @@
-import { HttpRequest } from "../models/http-request";
+import { HttpRequest } from "../models/http-request.model";
 import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { DeleteCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 

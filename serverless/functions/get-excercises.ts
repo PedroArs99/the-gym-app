@@ -1,7 +1,6 @@
-import { HttpRequest } from "../models/http-request";
+import { HttpRequest } from "../models/http-request.model";
 import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
-import { Excercise } from "../models/excercise";
 
 const EXCERCISES_TABLE = process.env.EXCERCISES_TABLE;
 const client = new DynamoDBClient();
