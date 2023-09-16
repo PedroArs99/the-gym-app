@@ -1,8 +1,11 @@
+import { API_URL } from '$env/static/private';
 import type { Routine } from '$lib/models/routine.model';
 import { fail } from '@sveltejs/kit';
+import axios from 'axios';
 
 export async function load() {
-	const routines: Routine[] = [];
+	const response = await axios.get(`${API_URL}/routines`);
+	const routines = response.data;
 
 	return {
 		routines
@@ -18,15 +21,8 @@ export const actions = {
 		};
 
 		if (requestBody.name) {
-			const response = {
-				data: {
-					id: '82da9e04-9c71-4e47-b0d6-6e97a5c0a9df',
-					createdAt: new Date(),
-					name: 'September 2023 - Just stay fit',
-				}
-			};
+			const response = await axios.put(`${API_URL}/routines`, requestBody);
 
-			
 			return response.data;
 		} else {
 			return fail(400, {

@@ -22,6 +22,7 @@ provider:
             - dynamodb:DeleteItem
           Resource:
             - Fn::GetAtt: [ ExcercisesTable, Arn ]
+            - Fn::GetAtt: [ RoutinesTable, Arn ]
   environment:
     EXCERCISES_TABLE: ${self:custom.excercisesTableName}
     ROUTINES_TABLE: ${self:custom.routinesTableName}
@@ -42,8 +43,8 @@ functions:
           - httpApi:
               path: '/excercises'
               method: get
-  getRoutine:
-      handler: functions/get-routine.handler
+  getRoutines:
+      handler: functions/get-routines.handler
       events:
           - httpApi:
               path: '/routines'
