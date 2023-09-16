@@ -12,5 +12,8 @@
 		</a>
 	</div>
 	<div class="navbar-end">
+			<a href="/excercises" class="btn btn-ghost normal-case text-xl">
+				<Icon icon='gear' />
+			</a>
 	</div>
 </div>

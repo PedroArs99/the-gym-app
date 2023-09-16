@@ -4,21 +4,22 @@
 	faCheck,
 	faCross,
 		faDumbbell,
+		faGear,
 		faHeart,
 		faInfoCircle,
 		faPlus,
-		faSquareCheck,
 		faWarning,
 		type IconDefinition
 	} from '@fortawesome/free-solid-svg-icons';
 
 	export let icon: Icon;
 
-	type Icon = 'dumbbell' | 'error' | 'heart' | 'info' | 'plus' | 'success' | 'warning';
+	type Icon = 'dumbbell' | 'error' | 'gear' | 'heart' | 'info' | 'plus' | 'success' | 'warning';
 
 	const icons: { [key: string]: IconDefinition } = {
 		dumbbell: faDumbbell,
 		error: faCross,
+		gear: faGear,
 		heart: faHeart,
 		info: faInfoCircle,
 		plus: faPlus,
