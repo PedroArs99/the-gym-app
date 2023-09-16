@@ -1,5 +1,6 @@
 export interface Routine {
   id: string;
-  createdAt: Date;
+  /* As ISO String */
+  createdAt: String;
   name: string;
 }
