@@ -3,6 +3,7 @@ frameworkVersion: '3'
 
 custom:
   excercisesTableName: 'excercises-table-${sls:stage}'
+  routinesTableName: 'routines-table-${sls:stage}'
 
 provider:
   name: aws
@@ -23,6 +24,7 @@ provider:
             - Fn::GetAtt: [ ExcercisesTable, Arn ]
   environment:
     EXCERCISES_TABLE: ${self:custom.excercisesTableName}
+    ROUTINES_TABLE: ${self:custom.routinesTableName}
 
 plugins:
   - serverless-plugin-typescript
@@ -46,6 +48,12 @@ functions:
       - httpApi:
           path: '/excercises'
           method: put
+  upsertRoutine:
+    handler: functions/upsert-routine.handler
+    events:
+      - httpApi:
+          path: '/routines'
+          method: put
 
 resources:
   Resources:
@@ -62,3 +70,16 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:custom.excercisesTableName}
+    RoutinesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.routinesTableName}
