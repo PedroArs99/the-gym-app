@@ -1,10 +1,9 @@
 import { fail } from '@sveltejs/kit';
 import axios from 'axios';
-
-const apiUrl = 'https://5rjvidrtda.execute-api.eu-central-1.amazonaws.com';
+import { API_URL } from '$env/static/private';
 
 export async function load() {
-	const response = await axios.get(`${apiUrl}/excercises`);
+	const response = await axios.get(`${API_URL}/excercises`);
 	const excercises = response.data;
 
 	return {
@@ -22,7 +21,7 @@ export const actions = {
 		};
 
 		if (requestBody.name && requestBody.muscle) {
-			const response = await axios.put(`${apiUrl}/excercises`, requestBody);
+			const response = await axios.put(`${API_URL}/excercises`, requestBody);
 
 			return response.data;
 		} else {

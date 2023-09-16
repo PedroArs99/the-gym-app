@@ -1,9 +1,8 @@
 import axios from 'axios';
-
-const apiUrl = 'https://5rjvidrtda.execute-api.eu-central-1.amazonaws.com';
+import { API_URL } from '$env/static/private';
 
 export async function DELETE({ params }) {
-	await axios.delete(`${apiUrl}/excercises/${params.id}`);
+	await axios.delete(`${API_URL}/excercises/${params.id}`);
 
 	return new Response(null, { status: 204 });
 }
