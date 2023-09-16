@@ -74,10 +74,3 @@
 		<button class="btn btn-primary w-full">Save</button>
 	</form>
 </Dialog>
-
-<style lang="postcss">
-	.input,
-	select {
-		@apply w-full mb-3;
-	}
-</style>

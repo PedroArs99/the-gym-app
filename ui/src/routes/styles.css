@@ -3,9 +3,14 @@
 @tailwind utilities;
 
 * {
-  font-family: 'Roboto';
-} 
+	font-family: 'Roboto';
+}
 
 .page-title {
-  @apply pb-6 text-center text-5xl font-bold;
+	@apply pb-6 text-center text-5xl font-bold;
+}
+
+.input,
+select {
+	@apply w-full mb-3;
 }
