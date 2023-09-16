@@ -30,13 +30,15 @@
 	<thead>
 		<tr>
 			<th>Name</th>
+			<th>Created at</th>
 			<th />
 		</tr>
 	</thead>
 	<tbody>
-		{#each data.routines as { id, name }}
+		{#each data.routines as { id, name, createdAt }}
 			<tr transition:fade>
 				<th>{name}</th>
+				<th>{createdAt}</th>
 				<td class="float-right">
 					<button class="btn btn-warning" on:click={() => deleteRoutine(id)}> Delete </button>
 				</td>
