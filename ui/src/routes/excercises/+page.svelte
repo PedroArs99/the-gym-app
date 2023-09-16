@@ -50,7 +50,7 @@
 	</tbody>
 </table>
 
-<button on:click={() => (isNewModalVisible = true)} class="btn">
+<button on:click={() => (isNewModalVisible = true)} class="btn sticky bottom-0">
 	<Icon icon="plus" />
 </button>
 
