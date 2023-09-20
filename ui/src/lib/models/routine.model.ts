@@ -9,5 +9,11 @@ export interface Routine {
 
 export interface Workout {
   number: number;
-  excercises: Excercise[];
+  excercises: WorkoutExcercise[];
 }
+
+export type WorkoutExcercise = {
+	excercise: Excercise;
+	series: number;
+	reps: number;
+};
