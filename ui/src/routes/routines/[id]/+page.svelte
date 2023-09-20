@@ -1,11 +1,14 @@
 <script lang="ts">
 	import Icon from '$lib/components/Icon.svelte';
 	import Workout from '$lib/components/Workout.svelte';
+	import type { Excercise } from '$lib/models/excercise.model';
 	import type { Routine, Workout as WorkoutModel } from '$lib/models/routine.model';
+	import { excercisesStore } from '$lib/stores/excercises.store';
 	import axios from 'axios';
 	import { fade } from 'svelte/transition';
 
 	export let data: {
+		excercises: Excercise[];
 		routine: Routine;
 	};
 
@@ -26,6 +29,8 @@
 		await axios.put(`/routines/${upsertedRoutine.id}`, upsertedRoutine);
 	}
 
+
+	$: excercisesStore.set(data.excercises);
 	$: workouts = data.routine.workouts ?? [];
 </script>
 
