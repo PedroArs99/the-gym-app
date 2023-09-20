@@ -13,6 +13,7 @@
 	} from '@fortawesome/free-solid-svg-icons';
 
 	export let icon: Icon;
+	export let size: 'md' | 'lg' | '2x' | '3x' = 'md';
 
 	type Icon = 'dumbbell' | 'error' | 'gear' | 'heart' | 'info' | 'plus' | 'success' | 'warning';
 
@@ -28,4 +29,4 @@
 	};
 </script>
 
-<Fa icon={icons[icon]} />
+<Fa icon={icons[icon]} size={size} />
