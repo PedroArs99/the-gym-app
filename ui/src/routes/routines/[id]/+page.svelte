@@ -25,10 +25,16 @@
 		};
 
 		data.routine = upsertedRoutine;
-		
+
 		await axios.put(`/routines/${upsertedRoutine.id}`, upsertedRoutine);
 	}
 
+	async function updateWorkout(event: CustomEvent<WorkoutModel>) {
+		console.log(workouts, event.detail);
+
+		data.routine.workouts[event.detail.number -1] = event.detail;
+		data.routine.workouts = [...data.routine.workouts]
+	}
 
 	$: excercisesStore.set(data.excercises);
 	$: workouts = data.routine.workouts ?? [];
@@ -44,7 +50,7 @@
 <div class="workouts">
 	{#each workouts as workout}
 		<div transition:fade>
-			<Workout {workout} />
+			<Workout {workout} on:change={updateWorkout}/>
 		</div>
 	{/each}
 </div>
