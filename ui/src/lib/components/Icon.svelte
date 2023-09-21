@@ -8,14 +8,15 @@
 		faHeart,
 		faInfoCircle,
 		faPlus,
+		faTrash,
 		faWarning,
 		type IconDefinition
 	} from '@fortawesome/free-solid-svg-icons';
 
 	export let icon: Icon;
-	export let size: 'md' | 'lg' | '2x' | '3x' = 'md';
+	export let size: 'sm' | 'md' | 'lg' | '2x' | '3x' = 'md';
 
-	type Icon = 'dumbbell' | 'error' | 'gear' | 'heart' | 'info' | 'plus' | 'success' | 'warning';
+	type Icon = 'dumbbell' | 'error' | 'gear' | 'heart' | 'info' | 'plus' | 'success' | 'trash' | 'warning';
 
 	const icons: { [key: string]: IconDefinition } = {
 		dumbbell: faDumbbell,
@@ -25,6 +26,7 @@
 		info: faInfoCircle,
 		plus: faPlus,
 		success: faCheck,
+		trash: faTrash,
 		waning: faWarning,
 	};
 </script>
