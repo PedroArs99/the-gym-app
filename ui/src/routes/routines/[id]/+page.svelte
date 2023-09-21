@@ -5,7 +5,7 @@
 	import type { Routine, Workout as WorkoutModel } from '$lib/models/routine.model';
 	import { excercisesStore } from '$lib/stores/excercises.store';
 	import axios from 'axios';
-	import { fade } from 'svelte/transition';
+	import { slide } from 'svelte/transition';
 
 	export let data: {
 		excercises: Excercise[];
@@ -66,7 +66,7 @@
 
 <div class="workouts">
 	{#each workouts as workout}
-		<div transition:fade>
+		<div transition:slide>
 			<Workout {workout} on:change={updateWorkout} on:delete={deleteWorkout} />
 		</div>
 	{/each}
