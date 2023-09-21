@@ -29,7 +29,7 @@ export function mapDbEntityToModel(
       dateFormatOptions
     ),
     name: item.name.S!,
-    workouts: flattenWorkouts(item.workouts.L ?? []),
+    workouts: flattenWorkouts(item.workouts?.L ?? []),
   };
 }
 
