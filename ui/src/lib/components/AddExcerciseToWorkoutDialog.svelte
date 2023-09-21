@@ -46,18 +46,19 @@
 			{/each}
 		</select>
 
-		<div class="form-control w-full max-w-xs">
+		<!-- TODO: Introduce fancy Numeric inputs-->
+		<div class="form-control w-full">
 			<label for="series" class="label">
 				<span class="label-text">Series</span>
 			</label>
-			<input type="number" min="1" max="6" class="input input-bordered w-full max-w-xs" bind:value={series} />
+			<input type="number" min="1" max="6" class="input input-bordered w-full" bind:value={series} />
 		</div>
 
-		<div class="form-control w-full max-w-xs">
+		<div class="form-control w-full">
 			<label for="series" class="label">
 				<span class="label-text">Reps</span>
 			</label>
-			<input type="number" min="1" max="30" class="input input-bordered w-full max-w-xs" bind:value={reps} />
+			<input type="number" min="1" max="30" class="input input-bordered w-full" bind:value={reps} />
 		</div>
 	{/if}
 

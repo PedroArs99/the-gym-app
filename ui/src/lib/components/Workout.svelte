@@ -35,6 +35,8 @@
 				</button>
 			</div>
 		</div>
+
+		<!-- TODO:  Introduce a fancy table-->
 		<div class="excercises">
 			<ul>
 				{#each workout.excercises as { excercise, series, reps }}
