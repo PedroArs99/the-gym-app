@@ -29,11 +29,28 @@
 		await axios.put(`/routines/${upsertedRoutine.id}`, upsertedRoutine);
 	}
 
+	// TODO: Save this changes on the backend
 	async function updateWorkout(event: CustomEvent<WorkoutModel>) {
-		console.log(workouts, event.detail);
+		data.routine.workouts[event.detail.number - 1] = event.detail;
+		data.routine.workouts = [...data.routine.workouts];
+	}
 
-		data.routine.workouts[event.detail.number -1] = event.detail;
-		data.routine.workouts = [...data.routine.workouts]
+	async function deleteWorkout(event: CustomEvent<number>) {
+		const removedIndex = event.detail - 1;
+		const unmodifiedWorkouts = workouts.slice(0, removedIndex);
+
+		const modifiedWorkouts = workouts
+			.slice(removedIndex + 1)
+			.map((workout: WorkoutModel) => ({ ...workout, number: workout.number - 1 }));
+
+		const modifiedRoutine = {
+			...data.routine,
+			workouts: [...unmodifiedWorkouts, ...modifiedWorkouts]
+		};
+
+		await axios.put(`/routines/${modifiedRoutine.id}`, modifiedRoutine);
+
+		workouts = modifiedRoutine.workouts;
 	}
 
 	$: excercisesStore.set(data.excercises);
@@ -50,7 +67,7 @@
 <div class="workouts">
 	{#each workouts as workout}
 		<div transition:fade>
-			<Workout {workout} on:change={updateWorkout}/>
+			<Workout {workout} on:change={updateWorkout} on:delete={deleteWorkout} />
 		</div>
 	{/each}
 </div>
