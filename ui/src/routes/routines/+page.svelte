@@ -36,7 +36,9 @@
 			<tr transition:fade class="hover" on:click={() => openRoutineDetails(id)}>
 				<td>{name}</td>
 				<td>{createdAt}</td>
-				<td class="float-right"></td>
+				<td class="float-right">
+					<!-- TODO: Duplicate feature -->
+				</td>
 			</tr>
 		{/each}
 	</tbody>
@@ -46,6 +48,7 @@
 	<Icon icon="plus" />
 </button>
 
+<!-- TODO: Refactor into an own component -->
 <Dialog dialogId="new-routine-dialog" isDialogOpen={isNewModalVisible} on:close={() => (isNewModalVisible = false)}>
 	<form method="post" action="?/create" use:enhance>
 		<h3 class="font-bold text-lg mb-3">Add new Routine</h3>

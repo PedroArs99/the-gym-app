@@ -28,6 +28,7 @@
 <div class="card">
 	<div class="card-body">
 		<div class="card-title">
+			<!-- TODO: Display muscle groups here-->
 			<span>Workout #{workout.number}</span>
 			<div class="actions">
 				<button class="btn btn-ghost" on:click={() => deleteWorkout(workout.number)}>
@@ -47,6 +48,7 @@
 			<button class="btn w-full" on:click={() => (isDialogOpen = true)}>
 				<Icon icon="plus" />
 			</button>
+			<!-- TODO: Add edit feature-->
 		</div>
 	</div>
 </div>

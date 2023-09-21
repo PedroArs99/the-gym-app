@@ -15,5 +15,6 @@ export interface Workout {
 export type WorkoutExcercise = {
 	excercise: Excercise;
 	series: number;
-	reps: number;
+  reps: number;
+  // TODO: Track weights
 };
