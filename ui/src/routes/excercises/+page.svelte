@@ -50,9 +50,9 @@
 	</tbody>
 </table>
 
-<button on:click={() => (isNewModalVisible = true)} class="btn sticky bottom-0">
+<!-- <button on:click={() => (isNewModalVisible = true)} class="btn sticky bottom-0">
 	<Icon icon="plus" />
-</button>
+</button> -->
 
 <Dialog dialogId="new-excercise-dialog" isDialogOpen={isNewModalVisible} on:close={() => (isNewModalVisible = false)}>
 	<form method="post" action="?/create" use:enhance>
