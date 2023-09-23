@@ -1,9 +1,9 @@
 import { fail } from '@sveltejs/kit';
 import axios from 'axios';
-import { API_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
 export async function load() {
-	const response = await axios.get(`${API_URL}/excercises`);
+	const response = await axios.get(`${env.API_URL}/excercises`);
 	const excercises = response.data;
 
 	return {
@@ -21,7 +21,7 @@ export const actions = {
 		};
 
 		if (requestBody.name && requestBody.muscle) {
-			const response = await axios.put(`${API_URL}/excercises`, requestBody);
+			const response = await axios.put(`${env.API_URL}/excercises`, requestBody);
 
 			return response.data;
 		} else {

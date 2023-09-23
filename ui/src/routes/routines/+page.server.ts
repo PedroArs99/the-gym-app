@@ -1,9 +1,9 @@
-import { API_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { fail } from '@sveltejs/kit';
 import axios from 'axios';
 
 export async function load() {
-	const response = await axios.get(`${API_URL}/routines`);
+	const response = await axios.get(`${env.API_URL}/routines`);
 	const routines = response.data;
 
 	return {
@@ -16,11 +16,11 @@ export const actions = {
 		const data: FormData = await request.formData();
 
 		const requestBody = {
-			name: data.get('name'),
+			name: data.get('name')
 		};
 
 		if (requestBody.name) {
-			const response = await axios.put(`${API_URL}/routines`, requestBody);
+			const response = await axios.put(`${env.API_URL}/routines`, requestBody);
 
 			return response.data;
 		} else {
