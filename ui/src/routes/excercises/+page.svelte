@@ -29,7 +29,7 @@
 
 <h1 class="page-title">Excercises</h1>
 
-<table class="table table-pin-rows">
+<table class="table table-sm table-pin-rows">
 	<thead>
 		<tr>
 			<th>Name</th>
@@ -43,7 +43,9 @@
 				<th>{name}</th>
 				<td>{muscle}</td>
 				<td class="float-right">
-					<button class="btn btn-warning" on:click={() => deleteExcercise(id)}> Delete </button>
+					<button class="btn btn-ghost" on:click={() => deleteExcercise(id)}>
+						<Icon icon="trash" />
+					</button>
 				</td>
 			</tr>
 		{/each}
