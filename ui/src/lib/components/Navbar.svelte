@@ -2,7 +2,7 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { page } from '$app/stores';
 </script>
-
+<!-- TODO: Change this to be a bottom navigation-->
 <div class="navbar bg-base-100">
 	<div class="navbar-start">
 	</div>
