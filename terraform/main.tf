@@ -67,6 +67,8 @@ resource "aws_ecs_task_definition" "the-gym-app-task_definition" {
   network_mode = "awsvpc"
   cpu = var.allocated_vcpu
   memory = var.allocated_memory
+  task_role_arn = aws_iam_role.the-gym-app-task-role.arn
+  execution_role_arn = aws_iam_role.the-gym-app-task-role.arn
 
   runtime_platform {
     operating_system_family = "LINUX"
@@ -79,12 +81,12 @@ resource "aws_ecs_task_definition" "the-gym-app-task_definition" {
       image: var.app_image_name
       cpu = var.allocated_vcpu
       memory = var.allocated_memory
-      # environmentFiles = [
-      #   {
-      #     type = "s3"
-      #     value = var.env_file_s3_arn
-      #   }
-      # ]
+      environmentFiles = [
+        {
+          type = "s3"
+          value = var.env_file_s3_arn
+        }
+      ]
       portMappings = [
         {
           containerPort = 3000
@@ -120,3 +122,41 @@ resource "aws_security_group" "the-gym-app-sg" {
     Name = var.app_name
   }
 }
+
+resource "aws_iam_role" "the-gym-app-task-role" {
+  name = "${var.app_name}-task-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "ecs-tasks.amazonaws.com"
+        }
+        Sid = ""
+      },
+    ]
+  })
+
+  inline_policy {
+    name = "${var.app_name}-task-s3-access"
+    
+    policy = jsonencode({
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Action = ["s3:Get*"]
+          Effect = "Allow"
+          Resource = var.env_file_s3_arn
+        }
+      ]
+    })
+  }
+
+  tags = {
+    Name = var.app_name
+  }
+}
+
