@@ -53,8 +53,10 @@ resource "aws_ecs_service" "the-gym-app" {
   task_definition = aws_ecs_task_definition.the-gym-app-task_definition.id
   launch_type = "FARGATE"
   desired_count = 1
+
   network_configuration {
     subnets = [ aws_subnet.public_subnet.id ]
+    security_groups = [ aws_security_group.the-gym-app-sg.id ]
     assign_public_ip = true
   }
 }
@@ -65,6 +67,7 @@ resource "aws_ecs_task_definition" "the-gym-app-task_definition" {
   network_mode = "awsvpc"
   cpu = var.allocated_vcpu
   memory = var.allocated_memory
+
   runtime_platform {
     operating_system_family = "LINUX"
     cpu_architecture = "ARM64"
@@ -76,12 +79,12 @@ resource "aws_ecs_task_definition" "the-gym-app-task_definition" {
       image: var.app_image_name
       cpu = var.allocated_vcpu
       memory = var.allocated_memory
-      environmentFiles = [
-        {
-          type = "s3"
-          value = var.env_file_s3_arn
-        }
-      ]
+      # environmentFiles = [
+      #   {
+      #     type = "s3"
+      #     value = var.env_file_s3_arn
+      #   }
+      # ]
       portMappings = [
         {
           containerPort = 3000
@@ -90,4 +93,30 @@ resource "aws_ecs_task_definition" "the-gym-app-task_definition" {
       ]
     }
   ])
+}
+
+resource "aws_security_group" "the-gym-app-sg" {
+  name = "${var.app_name}-task-sg"
+  description = "Allow traffic on the port 3000"
+  vpc_id = aws_vpc.main.id
+
+  ingress {
+    description = "Port 3000 allow IN"
+    from_port = 3000
+    to_port = 3000
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = {
+    Name = var.app_name
+  }
 }
