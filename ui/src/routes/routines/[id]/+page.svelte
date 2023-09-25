@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Icon from '$lib/components/Icon.svelte';
 	import Workout from '$lib/components/Workout.svelte';
 	import type { Excercise } from '$lib/models/excercise.model';
 	import type { Routine, Workout as WorkoutModel } from '$lib/models/routine.model';
@@ -19,38 +18,35 @@
 			excercises: []
 		};
 
-		const upsertedRoutine = {
-			...data.routine,
-			workouts: [...workouts, newWorkout]
-		};
-
-		data.routine = upsertedRoutine;
-
-		await axios.put(`/routines/${upsertedRoutine.id}`, upsertedRoutine);
+		updateRoutineWorkouts([...workouts, newWorkout]);
 	}
 
-	// TODO: Save this changes on the backend
 	async function updateWorkout(event: CustomEvent<WorkoutModel>) {
-		data.routine.workouts[event.detail.number - 1] = event.detail;
-		data.routine.workouts = [...data.routine.workouts];
+		const modifiedWorkouts = [...data.routine.workouts];
+		modifiedWorkouts[event.detail.number - 1] = event.detail;
+
+		updateRoutineWorkouts(modifiedWorkouts);
 	}
 
 	async function deleteWorkout(event: CustomEvent<number>) {
 		const removedIndex = event.detail - 1;
 		const unmodifiedWorkouts = workouts.slice(0, removedIndex);
-
 		const modifiedWorkouts = workouts
 			.slice(removedIndex + 1)
 			.map((workout: WorkoutModel) => ({ ...workout, number: workout.number - 1 }));
 
+		await updateRoutineWorkouts([...unmodifiedWorkouts, ...modifiedWorkouts]);
+	}
+
+	async function updateRoutineWorkouts(workoutsToModify: WorkoutModel[]) {
+		workouts = workoutsToModify;
+
 		const modifiedRoutine = {
 			...data.routine,
-			workouts: [...unmodifiedWorkouts, ...modifiedWorkouts]
+			workouts: workoutsToModify
 		};
 
 		await axios.put(`/routines/${modifiedRoutine.id}`, modifiedRoutine);
-
-		workouts = modifiedRoutine.workouts;
 	}
 
 	$: excercisesStore.set(data.excercises);
