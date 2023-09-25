@@ -6,9 +6,12 @@
 
 	export let workout: Workout;
 
+	let isDialogOpen = false;
 	let dispatch = createEventDispatcher();
 
 	function addNewExcercise(event: CustomEvent<WorkoutExcercise>) {
+		// TODO: Filter duplicates
+		
 		const modifiedWorkout = {
 			...workout,
 			excercises: [...workout.excercises, event.detail]
@@ -21,8 +24,6 @@
 	function deleteWorkout(workoutNumber: number) {
 		dispatch('delete', workoutNumber);
 	}
-
-	let isDialogOpen = false;
 </script>
 
 <div class="workout-header">
@@ -50,25 +51,25 @@
 				<td>{excercise.name}</td>
 				<td>{series}</td>
 				<td>{reps}</td>
+				<td>
+					<!-- TODO: Add edit feature-->
+					<!-- TODO: Add remove feature-->
+				</td>
 			</tr>
 		{/each}
 	</tbody>
 </table>
 
-<!-- TODO: Add edit feature-->
+
 <button class="btn w-full" on:click={() => (isDialogOpen = true)}>
 	<span>Add Excercise</span>
 </button>
 
 <div class="divider opacity-100"></div>
 
-<AddExcerciseToWorkoutDialog {isDialogOpen} on:close={() => (isDialogOpen = false)} on:confirm={addNewExcercise} />
+<AddExcerciseToWorkoutDialog {isDialogOpen} on:close={() => (isDialogOpen = false)} on:confirm={(event) => addNewExcercise(event)} />
 
 <style lang="postcss">
-	.card {
-		@apply border border-primary rounded-2xl;
-	}
-
 	.workout-header {
 		display: flex;
 		justify-content: space-between;
