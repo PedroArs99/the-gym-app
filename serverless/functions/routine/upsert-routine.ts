@@ -11,8 +11,8 @@ const dynamoDbClient = DynamoDBDocumentClient.from(client);
 module.exports.handler = async (event: HttpRequest) => {
   const routine: Routine = JSON.parse(event.body);
 
-  console.debug(`Incoming Event: ${JSON.stringify(event, null, 2)}`)
-    
+  console.debug(`Incoming Event: ${JSON.stringify(event, null, 2)}`);
+
   if (!routine.id) {
     routine.id = uuidv4();
     routine.createdAt = new Date().toISOString();
@@ -21,15 +21,14 @@ module.exports.handler = async (event: HttpRequest) => {
   if (!isRoutineValid(routine)) {
     return {
       statusCode: 400,
-      body: "Invalid Request"
-    }
+      body: "Invalid Request",
+    };
   }
 
-    
-    const params = {
-      TableName: ROUTINES_TABLE,
-      Item: routine,
-    };
+  const params = {
+    TableName: ROUTINES_TABLE,
+    Item: routine,
+  };
 
   try {
     await dynamoDbClient.send(new PutCommand(params));

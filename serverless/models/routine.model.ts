@@ -1,6 +1,7 @@
 import { AttributeValue } from "@aws-sdk/client-dynamodb";
 import { dateLocale, dateFormatOptions } from "../config/date-format.config";
 import { Excercise } from "./excercise.model";
+import { Muscles } from "./muscles.enum";
 
 export interface Routine {
   id: string;
@@ -16,8 +17,15 @@ export function isRoutineValid(routine: Routine): boolean {
 
 export interface Workout {
   number: number;
-  excercises: Excercise[];
+  excercises: WorkoutExcercise[];
 }
+
+export type WorkoutExcercise = {
+  excercise: Excercise;
+  series: number;
+  reps: number;
+  // TODO: Track weights
+};
 
 export function mapDbEntityToModel(
   item: Record<string, AttributeValue>
@@ -39,6 +47,20 @@ function flattenWorkouts(workouts: AttributeValue[]): Workout[] {
     .map((workout) => workout.M!)
     .map((workout) => ({
       number: +workout.number.N!,
-      excercises: new Array<Excercise>,
+      excercises: flattenExcercises(workout.excercises.L ?? []),
     }));
+}
+
+function flattenExcercises(excercises: AttributeValue[]): WorkoutExcercise[] {
+  return excercises
+    .map(workoutExcercise => (workoutExcercise.M!))
+    .map(({excercise, reps, series}) => ({
+      excercise: {
+        id: excercise.M!.id.S!,
+        muscle: excercise.M!.muscle.S! as Muscles,
+        name: excercise.M!.name.S!,
+      },
+      reps: +reps.N!,
+      series: +series.N!,
+    }))
 }
