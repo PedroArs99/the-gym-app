@@ -73,7 +73,7 @@
 </div>
 
 <button on:click={newWorkout} class="btn">
-	<Icon icon="plus" />
+	<span>Add new workout</span>
 </button>
 
 <style lang="postcss">

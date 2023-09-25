@@ -19,50 +19,57 @@
 	}
 
 	function deleteWorkout(workoutNumber: number) {
-		dispatch('delete', workoutNumber)
+		dispatch('delete', workoutNumber);
 	}
 
 	let isDialogOpen = false;
 </script>
 
-<!-- TODO: Change this to be a table-->
-<div class="card">
-	<div class="card-body">
-		<div class="card-title">
-			<!-- TODO: Display muscle groups here-->
-			<span>Workout #{workout.number}</span>
-			<div class="actions">
-				<button class="btn btn-ghost" on:click={() => deleteWorkout(workout.number)}>
-					<Icon icon='trash' size='lg' />
-				</button>
-			</div>
-		</div>
-
-		<!-- TODO:  Introduce a fancy table-->
-		<div class="excercises">
-			<ul>
-				{#each workout.excercises as { excercise, series, reps }}
-					<li>{excercise.name}: {series} x {reps}</li>
-				{/each}
-			</ul>
-
-			<button class="btn w-full" on:click={() => (isDialogOpen = true)}>
-				<Icon icon="plus" />
-			</button>
-			<!-- TODO: Add edit feature-->
-		</div>
+<div class="workout-header">
+	<!-- TODO: Display muscle groups here-->
+	<h2 class="page-header">Workout #{workout.number}</h2>
+	<div class="actions">
+		<button class="btn btn-ghost" on:click={() => deleteWorkout(workout.number)}>
+			<Icon icon="trash" size="lg" />
+		</button>
 	</div>
 </div>
+
+<table class="table table-pin-rows">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Series</th>
+			<th>Reps</th>
+			<th />
+		</tr>
+	</thead>
+	<tbody>
+		{#each workout.excercises as { excercise, series, reps }}
+			<tr>
+				<td>{excercise.name}</td>
+				<td>{series}</td>
+				<td>{reps}</td>
+			</tr>
+		{/each}
+	</tbody>
+</table>
+
+<!-- TODO: Add edit feature-->
+<button class="btn w-full" on:click={() => (isDialogOpen = true)}>
+	<span>Add Excercise</span>
+</button>
+
+<div class="divider opacity-100"></div>
 
 <AddExcerciseToWorkoutDialog {isDialogOpen} on:close={() => (isDialogOpen = false)} on:confirm={addNewExcercise} />
 
 <style lang="postcss">
-
 	.card {
 		@apply border border-primary rounded-2xl;
 	}
 
-	.card-title {
+	.workout-header {
 		display: flex;
 		justify-content: space-between;
 
