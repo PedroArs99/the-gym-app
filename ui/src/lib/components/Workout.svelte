@@ -11,7 +11,6 @@
 
 	function addNewExcercise(event: CustomEvent<WorkoutExcercise>) {
 		// TODO: Filter duplicates
-		
 		const modifiedWorkout = {
 			...workout,
 			excercises: [...workout.excercises, event.detail]
@@ -24,11 +23,14 @@
 	function deleteWorkout(workoutNumber: number) {
 		dispatch('delete', workoutNumber);
 	}
+
+	$: groups = workout.excercises
+		.map(({ excercise }) => excercise.muscle)
+		.reduce((acc, currentValue) => (acc.includes(currentValue) ? acc : [...acc, currentValue]), new Array<string>);
 </script>
 
 <div class="workout-header">
-	<!-- TODO: Display muscle groups here-->
-	<h2 class="page-header">Workout #{workout.number}</h2>
+	<h2 class="page-header">Workout #{workout.number} - {groups}</h2>
 	<div class="actions">
 		<button class="btn btn-ghost" on:click={() => deleteWorkout(workout.number)}>
 			<Icon icon="trash" size="lg" />
@@ -60,14 +62,17 @@
 	</tbody>
 </table>
 
-
 <button class="btn w-full" on:click={() => (isDialogOpen = true)}>
 	<span>Add Excercise</span>
 </button>
 
-<div class="divider"></div>
+<div class="divider" />
 
-<AddExcerciseToWorkoutDialog id="add-excercise-{workout.number}" {isDialogOpen}  on:close={() => (isDialogOpen = false)} on:confirm={addNewExcercise} />
+<AddExcerciseToWorkoutDialog
+	id="add-excercise-{workout.number}"
+	{isDialogOpen}
+	on:close={() => (isDialogOpen = false)}
+	on:confirm={addNewExcercise} />
 
 <style lang="postcss">
 	.workout-header {
