@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 </script>
 
-<div class="btm-nav drop-shadow-2xl">
+<div class="btm-nav z-50 drop-shadow-2xl">
 	<a href="/" class="text-primary flex flex-row" class:active={$page.route.id?.startsWith('/routines')}>
 		<Icon icon="heart" />
 		<Icon icon="dumbbell" />

@@ -61,8 +61,8 @@
 <h1 class="page-title">{data.routine.name}</h1>
 
 <div class="workouts">
-	{#each workouts as workout}
-		<div transition:slide>
+	{#each workouts as workout, index}
+		<div class="w-100 p-3 lg:w-1/2" transition:slide>
 			<Workout {workout} on:change={updateWorkout} on:delete={deleteWorkout} />
 		</div>
 	{/each}
@@ -75,8 +75,9 @@
 <style lang="postcss">
 	.workouts {
 		display: flex;
-		flex-direction: column;
+		flex-wrap: wrap;
+		justify-content: space-between;
 
-		@apply pb-6 gap-6;
+		@apply pb-6 flex-col lg:flex-row;
 	}
 </style>

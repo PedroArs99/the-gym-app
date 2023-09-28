@@ -26,7 +26,7 @@
 
 	$: groups = workout.excercises
 		.map(({ excercise }) => excercise.muscle)
-		.reduce((acc, currentValue) => (acc.includes(currentValue) ? acc : [...acc, currentValue]), new Array<string>);
+		.reduce((acc, currentValue) => (acc.includes(currentValue) ? acc : [...acc, currentValue]), new Array<string>());
 </script>
 
 <div class="workout-header">
@@ -65,8 +65,6 @@
 <button class="btn w-full" on:click={() => (isDialogOpen = true)}>
 	<span>Add Excercise</span>
 </button>
-
-<div class="divider" />
 
 <AddExcerciseToWorkoutDialog
 	id="add-excercise-{workout.number}"
