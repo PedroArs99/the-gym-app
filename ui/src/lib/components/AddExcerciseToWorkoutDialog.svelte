@@ -21,6 +21,7 @@
 	};
 
 	export let isDialogOpen = false;
+	export let id: string;
 
 	let dispatch = createEventDispatcher();
 
@@ -43,7 +44,7 @@
 	$: isFormStateValid = !!formState.selectedExcercise && formState.series > 0 && formState.reps > 0;
 </script>
 
-<Dialog dialogId="new-excercise-dialog" {isDialogOpen} on:close>
+<Dialog dialogId={id} {isDialogOpen} on:close>
 	<h3 class="font-bold text-lg mb-3">Add new Excercise</h3>
 
 	<select name="muscle" required class="select select-bordered" bind:value={formState.selectedMuscleGroup}>

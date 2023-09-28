@@ -65,9 +65,9 @@
 	<span>Add Excercise</span>
 </button>
 
-<div class="divider opacity-100"></div>
+<div class="divider"></div>
 
-<AddExcerciseToWorkoutDialog {isDialogOpen} on:close={() => (isDialogOpen = false)} on:confirm={(event) => addNewExcercise(event)} />
+<AddExcerciseToWorkoutDialog id="add-excercise-{workout.number}" {isDialogOpen}  on:close={() => (isDialogOpen = false)} on:confirm={addNewExcercise} />
 
 <style lang="postcss">
 	.workout-header {
