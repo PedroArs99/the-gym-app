@@ -24,7 +24,7 @@
 		flex-direction: column;
 		padding: 1rem;
 		width: 100%;
-		margin: 0 auto;
+		margin-bottom: 64px;
 		box-sizing: border-box;
 	}
 </style>
