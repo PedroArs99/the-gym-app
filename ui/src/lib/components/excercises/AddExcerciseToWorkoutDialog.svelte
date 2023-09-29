@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Dialog from './Dialog.svelte';
+	import Dialog from '../Dialog.svelte';
 	import { Muscles } from '$lib/models/muscles.enum';
 	import { excercisesStore } from '$lib/stores/excercises.store';
 	import { createEventDispatcher } from 'svelte';

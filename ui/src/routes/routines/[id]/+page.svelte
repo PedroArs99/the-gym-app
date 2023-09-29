@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Workout from '$lib/components/Workout.svelte';
+	import Workout from '$lib/components/routines/Workout.svelte';
 	import type { Excercise } from '$lib/models/excercise.model';
 	import type { Routine, Workout as WorkoutModel } from '$lib/models/routine.model';
 	import { excercisesStore } from '$lib/stores/excercises.store';
