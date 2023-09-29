@@ -1,10 +1,15 @@
 <script lang="ts">
 	import MuscleExcercises from '$lib/components/excercises/MuscleExcercises.svelte';
+	import type { Excercise } from '$lib/models/excercise.model.js';
 	import { Muscles } from '$lib/models/muscles.enum';
 	import { excercisesStore } from '$lib/stores/excercises.store.js';
-	import { slide } from 'svelte/transition';
+	import axios from 'axios';
 
 	export let data;
+
+	async function addNewExcercise({detail: excercise}: CustomEvent<Excercise>) {
+		await axios.put(`/excercises`, excercise);
+	}
 
 	$: excercisesStore.set(data.excercises);
 </script>
@@ -18,18 +23,15 @@
 
 <div class="excercises">
 	{#each Object.values(Muscles) as muscle}
-		<div class="w-100 p-3 lg:w-1/2" transition:slide>
-			<MuscleExcercises {muscle} />
-		</div>
+			<MuscleExcercises {muscle} on:create={addNewExcercise} />
 	{/each}
 </div>
 
 <style lang="postcss">
 	.excercises {
 		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
+		flex-direction: column;
 
-		@apply pb-6 flex-col lg:flex-row;
+		@apply gap-6;
 	}
 </style>

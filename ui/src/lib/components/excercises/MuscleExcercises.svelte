@@ -3,11 +3,20 @@
 
 	import type { Muscles } from '$lib/models/muscles.enum';
 	import { excercisesStore } from '$lib/stores/excercises.store';
+	import CreateExcerciseDialog from './CreateExcerciseDialog.svelte';
+	import type { Excercise } from '$lib/models/excercise.model';
 
 	export let muscle: Muscles;
 
+	const dispatch = createEventDispatcher();
+
 	let isDialogOpen = false;
-	let dispatch = createEventDispatcher();
+
+	function createExcercise({ detail: excercise }: CustomEvent<Excercise>) {
+		excercisesStore.addNewExcercise(excercise);
+		isDialogOpen = false;
+		dispatch('create', excercise);
+	}
 
 	$: excercises = $excercisesStore.filter((excercise) => excercise.muscle === muscle);
 </script>
@@ -27,7 +36,7 @@
 		{#each excercises as excercise}
 			<tr>
 				<td>{excercise.name}</td>
-				<td></td>
+				<td />
 			</tr>
 		{/each}
 	</tbody>
@@ -36,6 +45,13 @@
 <button class="btn w-full" on:click={() => (isDialogOpen = true)}>
 	<span>Add Excercise</span>
 </button>
+
+<CreateExcerciseDialog
+	id="create-excercise-{muscle}"
+	{muscle}
+	{isDialogOpen}
+	on:close={() => (isDialogOpen = false)}
+	on:save={createExcercise} />
 
 <style lang="postcss">
 	.workout-header {
