@@ -30,6 +30,7 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/the-gym-app:latest
   deploy-terraform:
     name: Deploy Image to AWS ECS
+    needs: [build-and-push]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
