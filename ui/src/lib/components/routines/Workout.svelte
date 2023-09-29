@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { Workout, WorkoutExcercise } from '$lib/models/routine.model';
 	import { createEventDispatcher } from 'svelte';
-	import AddExcerciseToWorkoutDialog from './AddExcerciseToWorkoutDialog.svelte';
-	import Icon from './Icon.svelte';
+	import AddExcerciseToWorkoutDialog from '../excercises/AddExcerciseToWorkoutDialog.svelte';
+	import Icon from '../Icon.svelte';
 
 	export let workout: Workout;
 
