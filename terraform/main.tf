@@ -53,6 +53,7 @@ resource "aws_ecs_service" "the-gym-app" {
   task_definition = aws_ecs_task_definition.the-gym-app-task_definition.id
   launch_type = "FARGATE"
   desired_count = 1
+  force_new_deployment = true
 
   network_configuration {
     subnets = [ aws_subnet.public_subnet.id ]

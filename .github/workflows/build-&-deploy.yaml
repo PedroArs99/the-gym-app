@@ -10,6 +10,7 @@ on:
   
 jobs:
   build-and-push:
+    name: Build & Push Docker image
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
@@ -27,3 +28,18 @@ jobs:
           context: "{{defaultContext}}:ui"
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/the-gym-app:latest
+  deploy-terraform:
+    name: Deploy Image to AWS ECS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+      - name: Terraform Init
+        run: terraform init
+        working-directory: terraform
+      - name: Terraform Validate
+        run: terraform validate
+      - name: Terraform apply
+        run: terraform apply --auto-approve
