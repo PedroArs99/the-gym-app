@@ -1,4 +1,3 @@
-import { fail } from '@sveltejs/kit';
 import axios from 'axios';
 import { env } from '$env/dynamic/private';
 
