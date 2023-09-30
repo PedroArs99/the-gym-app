@@ -39,7 +39,7 @@
 	}
 
 	async function updateRoutineWorkouts(workoutsToModify: WorkoutModel[]) {
-		workouts = workoutsToModify;
+		data.routine.workouts = workoutsToModify;
 
 		const modifiedRoutine = {
 			...data.routine,
