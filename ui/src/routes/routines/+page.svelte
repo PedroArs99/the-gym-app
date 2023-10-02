@@ -4,12 +4,32 @@
 	import Alert from '$lib/components/Alert.svelte';
 	import Dialog from '$lib/components/Dialog.svelte';
 	import Icon from '$lib/components/Icon.svelte';
+	import type { Routine } from '$lib/models/routine.model.js';
+	import axios from 'axios';
 	import { fade } from 'svelte/transition';
 
-	export let data;
+	type PageData = {
+		routines: Routine[];
+	}
+
+	export let data: PageData;
 	export let form;
 
 	let isNewModalVisible = false;
+
+	async function onDuplicateClick(id: string, event: Event) {
+		event.stopPropagation();
+
+		const originalRoutine = data.routines.find(r => r.id === id);
+		const duplicated = {
+			name: `${originalRoutine?.name} - Copy`,
+			workouts: originalRoutine?.workouts
+		}
+
+		const response = await axios.put('/routines', duplicated);
+
+		data.routines = [...data.routines, response.data]
+	}
 
 	function openRoutineDetails(id: string) {
 		goto(`/routines/${id}`)
@@ -37,7 +57,9 @@
 				<td>{name}</td>
 				<td>{createdAt}</td>
 				<td class="float-right">
-					<!-- TODO: Duplicate feature -->
+					<button class="btn btn-ghost" on:click={(e) => onDuplicateClick(id, e)}>
+						<Icon icon="copy" size="lg" />
+					</button>
 				</td>
 			</tr>
 		{/each}
@@ -49,6 +71,7 @@
 </button>
 
 <!-- TODO: Refactor into an own component -->
+<!-- TODO: Refactor to use normal Http Requests -->
 <Dialog dialogId="new-routine-dialog" isDialogOpen={isNewModalVisible} on:close={() => (isNewModalVisible = false)}>
 	<form method="post" action="?/create" use:enhance>
 		<h3 class="font-bold text-lg mb-3">Add new Routine</h3>
