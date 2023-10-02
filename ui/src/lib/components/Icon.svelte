@@ -1,8 +1,9 @@
 <script lang="ts">
 	import Fa from 'svelte-fa/src/fa.svelte';
 	import {
-	faCheck,
-	faCross,
+		faCheck,
+		faCopy,
+		faCross,
 		faDumbbell,
 		faGear,
 		faHeart,
@@ -17,9 +18,10 @@
 	export let icon: Icon;
 	export let size: 'sm' | 'md' | 'lg' | '2x' | '3x' = 'md';
 
-	type Icon = 'dumbbell' | 'error' | 'gear' | 'heart' | 'info' | 'plus' | 'success' | 'trash' | 'utensils' | 'warning';
+	type Icon = 'copy' | 'dumbbell' | 'error' | 'gear' | 'heart' | 'info' | 'plus' | 'success' | 'trash' | 'utensils' | 'warning';
 
 	const icons: { [key: string]: IconDefinition } = {
+		copy: faCopy,
 		dumbbell: faDumbbell,
 		error: faCross,
 		gear: faGear,
@@ -29,8 +31,8 @@
 		success: faCheck,
 		trash: faTrash,
 		utensils: faUtensils,
-		waning: faWarning,
+		waning: faWarning
 	};
 </script>
 
-<Fa icon={icons[icon]} size={size} />
+<Fa icon={icons[icon]} {size} />
