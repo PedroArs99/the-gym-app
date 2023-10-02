@@ -17,6 +17,14 @@
 
 	let isNewModalVisible = false;
 
+	async function onDeleteRoutine(id: string, event: Event) {
+		event.stopPropagation();
+		
+		data.routines = data.routines.filter(r => r.id !== id);
+
+		axios.delete(`/routines/${id}`)
+	}
+
 	async function onDuplicateClick(id: string, event: Event) {
 		event.stopPropagation();
 
@@ -59,6 +67,9 @@
 				<td class="float-right">
 					<button class="btn btn-ghost" on:click={(e) => onDuplicateClick(id, e)}>
 						<Icon icon="copy" size="lg" />
+					</button>
+					<button class="btn btn-ghost" on:click={(e) => onDeleteRoutine(id, e)}>
+						<Icon icon="trash" size="lg" />
 					</button>
 				</td>
 			</tr>

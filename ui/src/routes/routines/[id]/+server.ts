@@ -8,3 +8,9 @@ export async function PUT({ request }) {
 
 	return new Response(response.data, { status: response.status, statusText: response.statusText });
 }
+
+export async function DELETE({ params }) {
+	await axios.delete(`${env.API_URL}/routines/${params.id}`);
+
+	return new Response(null, { status: 204 });
+}
