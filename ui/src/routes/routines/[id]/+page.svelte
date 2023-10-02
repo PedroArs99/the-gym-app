@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import Icon from '$lib/components/Icon.svelte';
 	import Workout from '$lib/components/routines/Workout.svelte';
 	import type { Excercise } from '$lib/models/excercise.model';
 	import type { Routine, Workout as WorkoutModel } from '$lib/models/routine.model';
@@ -10,6 +12,10 @@
 		excercises: Excercise[];
 		routine: Routine;
 	};
+
+	function navigateUpwards() {
+		goto('/routines');
+	}
 
 	async function newWorkout() {
 		const nextNumber = workouts.length + 1;
@@ -58,7 +64,12 @@
 	<meta name="description" content="The details of the selected routine" />
 </svelte:head>
 
-<h1 class="page-title">{data.routine.name}</h1>
+<div class="header">
+	<button class="btn btn-ghost" on:click={navigateUpwards}>
+		<Icon icon="arrow-left" size="2x"/>
+	</button>
+	<h1 class="page-title">{data.routine.name}</h1>
+</div>
 
 <div class="workouts">
 	{#each workouts as workout, index}
@@ -73,6 +84,12 @@
 </button>
 
 <style lang="postcss">
+	.header {
+		display: flex;
+
+		@apply gap-1;
+	}
+
 	.workouts {
 		display: flex;
 		flex-wrap: wrap;

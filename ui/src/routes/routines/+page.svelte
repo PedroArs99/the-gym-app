@@ -17,7 +17,7 @@
 
 	let isNewModalVisible = false;
 
-	async function onDeleteRoutine(id: string, event: Event) {
+	function onDeleteRoutine(id: string, event: Event) {
 		event.stopPropagation();
 		
 		data.routines = data.routines.filter(r => r.id !== id);

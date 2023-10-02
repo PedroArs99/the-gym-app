@@ -38,7 +38,7 @@
 	</div>
 </div>
 
-<table class="table table-pin-rows">
+<table class="table table-pin-rows border border-primary">
 	<thead>
 		<tr>
 			<th>Name</th>
@@ -76,6 +76,7 @@
 	.workout-header {
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 
 		@apply text-2xl;
 	}
