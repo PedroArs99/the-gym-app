@@ -32,6 +32,12 @@ plugins:
 
 functions:
   # Routines
+  deleteRoutine:
+      handler: functions/routine/delete-routine.handler
+      events: 
+          - httpApi:
+              path: '/routines/{id}'
+              method: delete
   getRoutines:
     handler: functions/routine/get-routines.handler
     events:
