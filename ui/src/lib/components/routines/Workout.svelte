@@ -24,6 +24,7 @@
 		dispatch('delete', workoutNumber);
 	}
 
+	// TODO: Implement camel-case pipeline
 	$: groups = workout.excercises
 		.map(({ excercise }) => excercise.muscle)
 		.reduce((acc, currentValue) => (acc.includes(currentValue) ? acc : [...acc, currentValue]), new Array<string>());
@@ -44,6 +45,7 @@
 			<th>Name</th>
 			<th>Series</th>
 			<th>Reps</th>
+			<th>Weight</th>
 			<th />
 		</tr>
 	</thead>
@@ -53,6 +55,7 @@
 				<td>{excercise.name}</td>
 				<td>{series}</td>
 				<td>{reps}</td>
+				<td>TODO kg</td>
 				<td>
 					<!-- TODO: Add edit feature-->
 					<!-- TODO: Add remove feature-->

@@ -9,6 +9,7 @@
 		faGear,
 		faHeart,
 		faInfoCircle,
+		faPencil,
 		faPlus,
 		faTrash,
 		faUtensils,
@@ -27,6 +28,7 @@
 		| 'gear'
 		| 'heart'
 		| 'info'
+		| 'pencil'
 		| 'plus'
 		| 'success'
 		| 'trash'
@@ -41,6 +43,7 @@
 		gear: faGear,
 		heart: faHeart,
 		info: faInfoCircle,
+		pencil: faPencil,
 		plus: faPlus,
 		success: faCheck,
 		trash: faTrash,

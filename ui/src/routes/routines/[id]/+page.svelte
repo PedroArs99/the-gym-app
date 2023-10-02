@@ -13,6 +13,19 @@
 		routine: Routine;
 	};
 
+	let isEditingName: boolean = false;
+	let newRoutineName: string = data.routine.name;
+
+	async function deleteWorkout(event: CustomEvent<number>) {
+		const removedIndex = event.detail - 1;
+		const unmodifiedWorkouts = workouts.slice(0, removedIndex);
+		const modifiedWorkouts = workouts
+			.slice(removedIndex + 1)
+			.map((workout: WorkoutModel) => ({ ...workout, number: workout.number - 1 }));
+
+		await updateRoutineWorkouts([...unmodifiedWorkouts, ...modifiedWorkouts]);
+	}
+
 	function navigateUpwards() {
 		goto('/routines');
 	}
@@ -27,21 +40,25 @@
 		updateRoutineWorkouts([...workouts, newWorkout]);
 	}
 
+	function toggleEditModeAndSave() {
+		if(newRoutineName !== data.routine.name) {
+			const modifiedRoutine = {
+				...data.routine,
+				name: newRoutineName
+			}
+
+			data.routine.name = newRoutineName;
+			axios.put(`/routines/${modifiedRoutine.id}`, modifiedRoutine);
+		}
+
+		isEditingName = !isEditingName;
+	}
+
 	async function updateWorkout(event: CustomEvent<WorkoutModel>) {
 		const modifiedWorkouts = [...data.routine.workouts];
 		modifiedWorkouts[event.detail.number - 1] = event.detail;
 
 		updateRoutineWorkouts(modifiedWorkouts);
-	}
-
-	async function deleteWorkout(event: CustomEvent<number>) {
-		const removedIndex = event.detail - 1;
-		const unmodifiedWorkouts = workouts.slice(0, removedIndex);
-		const modifiedWorkouts = workouts
-			.slice(removedIndex + 1)
-			.map((workout: WorkoutModel) => ({ ...workout, number: workout.number - 1 }));
-
-		await updateRoutineWorkouts([...unmodifiedWorkouts, ...modifiedWorkouts]);
 	}
 
 	async function updateRoutineWorkouts(workoutsToModify: WorkoutModel[]) {
@@ -66,13 +83,21 @@
 
 <div class="header">
 	<button class="btn btn-ghost" on:click={navigateUpwards}>
-		<Icon icon="arrow-left" size="2x"/>
+		<Icon icon="arrow-left" size="2x" />
 	</button>
-	<h1 class="page-title">{data.routine.name}</h1>
+	{#if !isEditingName}
+		<h1 class="page-title">{data.routine.name}</h1>
+	{:else}
+		<input type="text" bind:value={newRoutineName} class="input input-bordered w-full" />
+	{/if}
+
+	<button class="btn btn-ghost" on:click={toggleEditModeAndSave}>
+		<Icon icon="pencil" size="2x" />
+	</button>
 </div>
 
 <div class="workouts">
-	{#each workouts as workout, index}
+	{#each workouts as workout}
 		<div class="w-100 p-3 lg:w-1/2" transition:slide>
 			<Workout {workout} on:change={updateWorkout} on:delete={deleteWorkout} />
 		</div>
@@ -87,7 +112,7 @@
 	.header {
 		display: flex;
 
-		@apply gap-1;
+		@apply gap-3;
 	}
 
 	.workouts {

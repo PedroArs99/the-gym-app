@@ -6,7 +6,12 @@ export async function PUT({ request }) {
 
 	const response = await axios.put(`${env.API_URL}/routines`, body);
 
-	return new Response(response.data, { status: response.status, statusText: response.statusText });
+	return new Response(JSON.stringify(response.data), {
+		headers: {
+			'content-type': 'application/json'
+		},
+		status: response.status, statusText: response.statusText
+	});
 }
 
 export async function DELETE({ params }) {
