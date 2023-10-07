@@ -4,15 +4,14 @@
 </script>
 
 <div class="btm-nav z-50 drop-shadow-2xl">
-	<!-- TODO: Add Food Tracking -->
-	<!-- TODO: Add Training View -->
-	<a href="/" class="text-primary flex flex-row" class:active={$page.route.id?.startsWith('/routines')}>
+	<a href="/food" class="text-primary flex flex-row" class:active={$page.route.id?.startsWith('/food')}>
+		<Icon icon="utensils" />
+	</a>
+	<a href="/training" class="text-primary flex flex-row" class:active={$page.route.id?.startsWith('/training')}>
 		<Icon icon="heart" />
 		<Icon icon="dumbbell" />
 	</a>
-
-	<!-- TODO: Move Routine Configuration here-->
-	<a href="/excercises" class="text-primary" class:active={$page.route.id?.startsWith('/excercises')}>
+	<a href="/config" class="text-primary" class:active={$page.route.id?.startsWith('/excercises')}>
 		<Icon icon="gear" />
 	</a>
 </div>
