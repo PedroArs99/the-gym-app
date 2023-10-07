@@ -18,7 +18,8 @@
 	} from '@fortawesome/free-solid-svg-icons';
 
 	export let icon: Icon;
-	export let size: 'sm' | 'md' | 'lg' | '2x' | '3x' = 'md';
+	export let size: 'sm' | 'md' | 'lg' | '2x' | '3x' | '6x' = 'md';
+	export let spin: boolean = false;
 
 	type Icon =
 		| 'arrow-left'
@@ -52,4 +53,4 @@
 	};
 </script>
 
-<Fa icon={icons[icon]} {size} />
+<Fa icon={icons[icon]} {size} {spin} />
