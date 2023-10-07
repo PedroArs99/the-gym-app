@@ -7,15 +7,15 @@
 }
 
 .page-title {
-	@apply pb-6 text-left text-5xl font-bold;
+	@apply p-3 text-2xl text-center border-b lg:text-3xl lg:text-left font-bold;
 }
 
 .page-subtitle {
 	@apply pb-3 text-left text-4xl font-semibold;
 }
 
-.page-header {
-	@apply pb-1 text-left text-3xl font-medium;
+.header {
+	@apply text-left text-xl font-medium;
 }
 
 .input,

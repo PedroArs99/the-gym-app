@@ -11,7 +11,7 @@
 		<Icon icon="heart" />
 		<Icon icon="dumbbell" />
 	</a>
-	<a href="/config" class="text-primary" class:active={$page.route.id?.startsWith('/excercises')}>
+	<a href="/config/routines" class="text-primary" class:active={$page.route.id?.startsWith('/config')}>
 		<Icon icon="gear" />
 	</a>
 </div>

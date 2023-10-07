@@ -27,7 +27,7 @@
 	}
 
 	function navigateUpwards() {
-		goto('/routines');
+		goto('/config/routines');
 	}
 
 	async function newWorkout() {
@@ -41,11 +41,11 @@
 	}
 
 	function toggleEditModeAndSave() {
-		if(newRoutineName !== data.routine.name) {
+		if (newRoutineName !== data.routine.name) {
 			const modifiedRoutine = {
 				...data.routine,
 				name: newRoutineName
-			}
+			};
 
 			data.routine.name = newRoutineName;
 			axios.put(`/routines/${modifiedRoutine.id}`, modifiedRoutine);
@@ -81,38 +81,49 @@
 	<meta name="description" content="The details of the selected routine" />
 </svelte:head>
 
-<div class="header">
-	<button class="btn btn-ghost" on:click={navigateUpwards}>
-		<Icon icon="arrow-left" size="2x" />
-	</button>
-	{#if !isEditingName}
-		<h1 class="page-title">{data.routine.name}</h1>
-	{:else}
-		<input type="text" bind:value={newRoutineName} class="input input-bordered w-full" />
-	{/if}
+<div class="routine-container">
+	<div class="header">
+		<button class="hidden lg:inline-block btn btn-ghost" on:click={navigateUpwards}>
+			<Icon icon="arrow-left" size="lg" />
+		</button>
+		
+		{#if !isEditingName}
+			<h1 class="page-title">{data.routine.name}</h1>
+		{:else}
+			<input type="text" bind:value={newRoutineName} class="input input-bordered w-full" />
+		{/if}
 
-	<button class="btn btn-ghost" on:click={toggleEditModeAndSave}>
-		<Icon icon="pencil" size="2x" />
+		<button class="hidden lg:inline-block btn btn-ghost" on:click={toggleEditModeAndSave}>
+			<Icon icon="pencil" size="lg" />
+		</button>
+	</div>
+
+	<div class="workouts">
+		{#each workouts as workout}
+			<div class="w-100 p-3 lg:w-1/2" transition:slide>
+				<Workout {workout} on:change={updateWorkout} on:delete={deleteWorkout} />
+			</div>
+		{/each}
+	</div>
+
+	<button on:click={newWorkout} class="btn w-full">
+		<span>Add new workout</span>
 	</button>
 </div>
 
-<div class="workouts">
-	{#each workouts as workout}
-		<div class="w-100 p-3 lg:w-1/2" transition:slide>
-			<Workout {workout} on:change={updateWorkout} on:delete={deleteWorkout} />
-		</div>
-	{/each}
-</div>
-
-<button on:click={newWorkout} class="btn">
-	<span>Add new workout</span>
-</button>
-
-<style lang="postcss">
+<style lang="scss">
 	.header {
 		display: flex;
+		align-items: center;
 
 		@apply gap-3;
+	}
+
+	.routine-container {
+		margin-bottom: 76px;
+
+		display: flex;
+		flex-direction: column;
 	}
 
 	.workouts {
@@ -120,6 +131,6 @@
 		flex-wrap: wrap;
 		justify-content: space-between;
 
-		@apply pb-6 flex-col lg:flex-row;
+		@apply pb-6 flex-col md:flex-row;
 	}
 </style>

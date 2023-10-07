@@ -29,6 +29,8 @@
 
 <style lang="postcss">
 	.excercises {
+		margin-bottom: 76px;
+
 		display: flex;
 		flex-direction: column;
 

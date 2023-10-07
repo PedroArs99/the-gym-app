@@ -21,43 +21,42 @@
 	$: excercises = $excercisesStore.filter((excercise) => excercise.muscle === muscle);
 </script>
 
-<div class="workout-header">
-	<h2 class="page-header">{muscle}</h2>
+<div class="excercises-container">
+	<div class="header">
+		<h2 class="page-header">{muscle}</h2>
+	</div>
+
+	<table class="table table-pin-rows border border-primary">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th />
+			</tr>
+		</thead>
+		<tbody>
+			{#each excercises as excercise}
+				<tr>
+					<td>{excercise.name}</td>
+					<td />
+				</tr>
+			{/each}
+		</tbody>
+	</table>
+
+	<button class="btn w-full" on:click={() => (isDialogOpen = true)}>
+		<span>Add Excercise</span>
+	</button>
+
+	<CreateExcerciseDialog
+		id="create-excercise-{muscle}"
+		{muscle}
+		{isDialogOpen}
+		on:close={() => (isDialogOpen = false)}
+		on:save={createExcercise} />
 </div>
 
-<table class="table table-pin-rows">
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th />
-		</tr>
-	</thead>
-	<tbody>
-		{#each excercises as excercise}
-			<tr>
-				<td>{excercise.name}</td>
-				<td />
-			</tr>
-		{/each}
-	</tbody>
-</table>
-
-<button class="btn w-full" on:click={() => (isDialogOpen = true)}>
-	<span>Add Excercise</span>
-</button>
-
-<CreateExcerciseDialog
-	id="create-excercise-{muscle}"
-	{muscle}
-	{isDialogOpen}
-	on:close={() => (isDialogOpen = false)}
-	on:save={createExcercise} />
-
 <style lang="postcss">
-	.workout-header {
-		display: flex;
-		justify-content: space-between;
-
-		@apply text-2xl;
+	.header {
+		@apply p-3;
 	}
 </style>

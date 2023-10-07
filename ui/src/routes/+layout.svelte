@@ -4,11 +4,11 @@
 </script>
 
 <div class="app">
-	<Navbar />
-
 	<main>
 		<slot />
 	</main>
+
+	<Navbar />
 </div>
 
 <style>

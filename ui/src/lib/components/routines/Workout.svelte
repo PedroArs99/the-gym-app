@@ -29,7 +29,7 @@
 </script>
 
 <div class="workout-header">
-	<h2 class="page-header">Workout #{workout.number} - {groups}</h2>
+	<h2 class="header">Workout #{workout.number} - {groups}</h2>
 	<div class="actions">
 		<button class="btn btn-ghost" on:click={() => deleteWorkout(workout.number)}>
 			<Icon icon="trash" size="lg" />
