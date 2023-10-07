@@ -1,6 +1,3 @@
-// TODO: Set up scaling rules: With time frame and/or http requests
-// Add a domain connection
-
 // Networking -------------------------------------------------------------------------------------
 resource "aws_vpc" "main" {
  cidr_block = "10.0.0.0/16"
@@ -94,7 +91,7 @@ resource "aws_ecs_task_definition" "the-gym-app-task_definition" {
       portMappings = [
         {
           containerPort = 3000
-          hostPort = 3000
+          hostPort = 80
         }
       ]
     }
@@ -103,13 +100,13 @@ resource "aws_ecs_task_definition" "the-gym-app-task_definition" {
 
 resource "aws_security_group" "the-gym-app-sg" {
   name = "${var.app_name}-task-sg"
-  description = "Allow traffic on the port 3000"
+  description = "Allow traffic on the port 80"
   vpc_id = aws_vpc.main.id
 
   ingress {
-    description = "Port 3000 allow IN"
-    from_port = 3000
-    to_port = 3000
+    description = "Port 80 allow IN"
+    from_port = 80
+    to_port = 80
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
