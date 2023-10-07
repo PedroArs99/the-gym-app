@@ -10,7 +10,6 @@
 	let dispatch = createEventDispatcher();
 
 	function addNewExcercise(event: CustomEvent<WorkoutExcercise>) {
-		// TODO: Filter duplicates
 		const modifiedWorkout = {
 			...workout,
 			excercises: [...workout.excercises, event.detail]
@@ -24,7 +23,6 @@
 		dispatch('delete', workoutNumber);
 	}
 
-	// TODO: Implement camel-case pipeline
 	$: groups = workout.excercises
 		.map(({ excercise }) => excercise.muscle)
 		.reduce((acc, currentValue) => (acc.includes(currentValue) ? acc : [...acc, currentValue]), new Array<string>());
@@ -57,8 +55,6 @@
 				<td>{reps}</td>
 				<td>TODO kg</td>
 				<td>
-					<!-- TODO: Add edit feature-->
-					<!-- TODO: Add remove feature-->
 				</td>
 			</tr>
 		{/each}

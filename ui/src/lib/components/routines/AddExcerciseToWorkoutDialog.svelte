@@ -62,7 +62,6 @@
 			{/each}
 		</select>
 
-		<!-- TODO: Introduce fancy Numeric inputs-->
 		<div class="form-control w-full">
 			<label for="series" class="label">
 				<span class="label-text">Series</span>

@@ -81,8 +81,6 @@
 	<Icon icon="plus" />
 </button>
 
-<!-- TODO: Refactor into an own component -->
-<!-- TODO: Refactor to use normal Http Requests -->
 <Dialog dialogId="new-routine-dialog" isDialogOpen={isNewModalVisible} on:close={() => (isNewModalVisible = false)}>
 	<form method="post" action="?/create" use:enhance>
 		<h3 class="font-bold text-lg mb-3">Add new Routine</h3>

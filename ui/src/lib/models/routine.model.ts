@@ -16,5 +16,4 @@ export type WorkoutExcercise = {
 	excercise: Excercise;
 	series: number;
   reps: number;
-  // TODO: Track weights
 };
