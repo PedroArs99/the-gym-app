@@ -39,7 +39,7 @@
 	</div>
 </div>
 
-<table class="table table-pin-rows border border-primary">
+<table class="table table-sm lg:table-lg table-pin-rows border border-primary">
 	<thead>
 		<tr>
 			<th>Name</th>
@@ -50,13 +50,29 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each workout.excercises as { excercise, series, reps }}
+		{#each workout.excercises as { excercise, series, reps }, index}
 			<tr>
 				<td>{excercise.name}</td>
 				<td>{series}</td>
 				<td>{reps}</td>
 				<td>TODO kg</td>
-				<td />
+				<td class="dropdown dropdown-left">
+					<button class="btn btn-sm btn-ghost">
+						<Icon icon="ellipsis-vertical" />
+					</button>
+					<ul class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box border items-start">
+						<li class="w-full">
+							<button class="btn btn-sm btn-ghost justify-start">
+								<Icon icon="trash" /> Delete
+							</button>
+						</li>
+						<li class="w-full text-left">
+							<button class="btn btn-sm btn-ghost justify-start">
+								<Icon icon="pencil" /> Edit
+							</button>
+						</li>
+					</ul>
+				</td>
 			</tr>
 		{/each}
 	</tbody>

@@ -6,6 +6,7 @@
 		faCopy,
 		faCross,
 		faDumbbell,
+		faEllipsisVertical,
 		faGear,
 		faHeart,
 		faInfoCircle,
@@ -25,6 +26,7 @@
 		| 'arrow-left'
 		| 'copy'
 		| 'dumbbell'
+		| 'ellipsis-vertical'
 		| 'error'
 		| 'gear'
 		| 'heart'
@@ -40,6 +42,7 @@
 		'arrow-left': faArrowLeft,
 		copy: faCopy,
 		dumbbell: faDumbbell,
+		'ellipsis-vertical': faEllipsisVertical,
 		error: faCross,
 		gear: faGear,
 		heart: faHeart,
