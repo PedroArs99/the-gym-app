@@ -3,6 +3,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import AddExcerciseToWorkoutDialog from './AddExcerciseToWorkoutDialog.svelte';
 	import Icon from '../Icon.svelte';
+	import { toCamelCase } from '$lib/pipes/toCamelCase';
 
 	export let workout: Workout;
 
@@ -25,7 +26,8 @@
 
 	$: groups = workout.excercises
 		.map(({ excercise }) => excercise.muscle)
-		.reduce((acc, currentValue) => (acc.includes(currentValue) ? acc : [...acc, currentValue]), new Array<string>());
+		.reduce((acc, currentValue) => (acc.includes(currentValue) ? acc : [...acc, currentValue]), new Array<string>())
+		.map((group) => toCamelCase(group));
 </script>
 
 <div class="workout-header">
@@ -54,8 +56,7 @@
 				<td>{series}</td>
 				<td>{reps}</td>
 				<td>TODO kg</td>
-				<td>
-				</td>
+				<td />
 			</tr>
 		{/each}
 	</tbody>

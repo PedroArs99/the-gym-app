@@ -81,7 +81,7 @@
 	<meta name="description" content="The details of the selected routine" />
 </svelte:head>
 
-<div class="routine-container">
+<div class="page">
 	<div class="header">
 		<button class="hidden lg:inline-block btn btn-ghost" on:click={navigateUpwards}>
 			<Icon icon="arrow-left" size="lg" />
@@ -117,13 +117,6 @@
 		align-items: center;
 
 		@apply gap-3;
-	}
-
-	.routine-container {
-		margin-bottom: 76px;
-
-		display: flex;
-		flex-direction: column;
 	}
 
 	.workouts {
