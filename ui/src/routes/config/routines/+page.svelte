@@ -6,7 +6,6 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import type { Routine } from '$lib/models/routine.model.js';
 	import axios from 'axios';
-	import { fade } from 'svelte/transition';
 
 	type PageData = {
 		routines: Routine[];
@@ -26,6 +25,7 @@
 	}
 
 	async function onDuplicateClick(id: string, event: Event) {
+		// TODO Move to the backend
 		event.stopPropagation();
 
 		const originalRoutine = data.routines.find((r) => r.id === id);
@@ -38,10 +38,6 @@
 
 		data.routines = [...data.routines, response.data];
 	}
-
-	function openRoutineDetails(id: string) {
-		goto(`./routines/${id}`);
-	}
 </script>
 
 <svelte:head>
@@ -49,38 +45,35 @@
 	<meta name="description" content="The list of registered routines" />
 </svelte:head>
 
-<div class="routines-container">
+<div class="page">
 	<h1 class="page-title">Routines</h1>
 
-	<table class="table table-pin-rows">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Created at</th>
-				<th />
-			</tr>
-		</thead>
-		<tbody>
-			{#each data.routines as { id, name, createdAt }}
-				<tr transition:fade class="hover" on:click={() => openRoutineDetails(id)}>
-					<td>{name}</td>
-					<td>{createdAt}</td>
-					<td class="row-actions">
-						<button class="btn btn-ghost" on:click={(e) => onDuplicateClick(id, e)}>
+	<div class="routines-container">
+		{#each data.routines as routine}
+			<div class="card hover:bg-base-300 hover:cursor-pointer" on:click={() => goto(`./routines/${routine.id}`)}>
+				<div class="card-body">
+					<h2 class="card-title">{routine.name}</h2>
+					<p><strong>Created At:</strong> {routine.createdAt}</p>
+					<div class="card-actions">
+						<button class="btn btn-primary" on:click={(e) => onDuplicateClick(routine.id, e)}>
 							<Icon icon="copy" size="lg" />
+							<span>Duplicate</span>
 						</button>
-						<button class="btn btn-ghost" on:click={(e) => onDeleteRoutine(id, e)}>
+						<button class="btn btn-primary" on:click={(e) => onDeleteRoutine(routine.id, e)}>
 							<Icon icon="trash" size="lg" />
+							<span>Delete</span>
 						</button>
-					</td>
-				</tr>
-			{/each}
-		</tbody>
-	</table>
+					</div>
+				</div>
+			</div>
+		{/each}
 
-	<button on:click={() => (isNewModalVisible = true)} class="btn">
-		<Icon icon="plus" />
-	</button>
+		<div class="card">
+			<button class="btn w-full h-full p-3" on:click={() => (isNewModalVisible = true)}>
+				<Icon icon="plus" size="2x" />
+			</button>
+		</div>
+	</div>
 
 	<Dialog dialogId="new-routine-dialog" isDialogOpen={isNewModalVisible} on:close={() => (isNewModalVisible = false)}>
 		<form method="post" action="?/create" use:enhance>
@@ -97,20 +90,16 @@
 	</Dialog>
 </div>
 
-<style lang="postcss">
-	.hover {
-		cursor: pointer;
+<style lang="scss">
+	.card {
+		@apply border border-primary lg:w-96;
+	}
+
+	.card-actions {
+		justify-content: space-around;
 	}
 
 	.routines-container {
-		display: flex;
-		flex-direction: column;
-
-		@apply gap-6;
-	}
-
-	.row-actions {
-		display: flex;
-		justify-content: end;
+		@apply flex flex-col lg:flex-row gap-3;
 	}
 </style>
