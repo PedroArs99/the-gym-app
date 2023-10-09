@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import Alert from '$lib/components/Alert.svelte';
 	import Dialog from '$lib/components/Dialog.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import type { Routine } from '$lib/models/routine.model.js';
@@ -11,17 +9,23 @@
 		routines: Routine[];
 	};
 
+	type FormData = {
+		name: string;
+	}
+
 	export let data: PageData;
-	export let form;
-
+	
 	let isNewModalVisible = false;
+	let form: FormData = {
+		name: ''
+	};
 
-	function onDeleteRoutine(id: string, event: Event) {
+	async function onDeleteRoutine(id: string, event: Event) {
 		event.stopPropagation();
 
 		data.routines = data.routines.filter((r) => r.id !== id);
 
-		axios.delete(`/routines/${id}`);
+		await axios.delete(`/api/routines/${id}`);
 	}
 
 	async function onDuplicateClick(id: string, event: Event) {
@@ -34,7 +38,19 @@
 			workouts: originalRoutine?.workouts
 		};
 
-		const response = await axios.put('/routines', duplicated);
+		upsertRoutine(duplicated);		
+	}
+
+	async function createRoutine() {
+		const routineBody = {
+			name: form.name
+		}
+
+		upsertRoutine(routineBody);
+	}
+
+	async function upsertRoutine(routine: Partial<Routine>) {
+		const response = await axios.put('/routines', routine);
 
 		data.routines = [...data.routines, response.data];
 	}
@@ -53,6 +69,7 @@
 			<div class="card hover:bg-base-300 hover:cursor-pointer" on:click={() => goto(`./routines/${routine.id}`)}>
 				<div class="card-body">
 					<h2 class="card-title">{routine.name}</h2>
+					{routine.id}
 					<p><strong>Created At:</strong> {routine.createdAt}</p>
 					<div class="card-actions">
 						<button class="btn btn-primary" on:click={(e) => onDuplicateClick(routine.id, e)}>
@@ -76,17 +93,11 @@
 	</div>
 
 	<Dialog dialogId="new-routine-dialog" isDialogOpen={isNewModalVisible} on:close={() => (isNewModalVisible = false)}>
-		<form method="post" action="?/create" use:enhance>
-			<h3 class="font-bold text-lg mb-3">Add new Routine</h3>
+		<h3 class="font-bold text-lg mb-3">Add new Routine</h3>
 
-			{#if form?.error}
-				<Alert severity="error" message={form.error} />
-			{/if}
+		<input type="text" name="name" bind:value={form.name} placeholder="Name" required class="input input-bordered w-full" />
 
-			<input type="text" name="name" placeholder="Name" required class="input input-bordered w-full" />
-
-			<button class="btn btn-primary w-full">Save</button>
-		</form>
+		<button class="btn btn-primary w-full" on:click={createRoutine}>Save</button>
 	</Dialog>
 </div>
 
