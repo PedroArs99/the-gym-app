@@ -5,6 +5,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import type { Excercise } from '$lib/models/excercise.model';
 	import type { WorkoutExcercise } from '$lib/models/routine.model';
+	import NumericInput from '../utils/NumericInput.svelte';
 
 	type FormState = {
 		selectedMuscleGroup?: Muscles;
@@ -66,14 +67,14 @@
 			<label for="series" class="label">
 				<span class="label-text">Series</span>
 			</label>
-			<input type="number" min="1" max="6" class="input input-bordered w-full" bind:value={formState.series} />
+			<NumericInput value={formState.series} on:valueChanged={(e) => formState.series = e.detail} />
 		</div>
 
 		<div class="form-control w-full">
 			<label for="series" class="label">
 				<span class="label-text">Reps</span>
 			</label>
-			<input type="number" min="1" max="30" class="input input-bordered w-full" bind:value={formState.reps} />
+			<NumericInput value={formState.reps} on:valueChanged={(e) => formState.reps = e.detail} />
 		</div>
 	{/if}
 

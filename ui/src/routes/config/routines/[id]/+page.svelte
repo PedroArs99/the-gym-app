@@ -69,7 +69,7 @@
 			workouts: workoutsToModify
 		};
 
-		await axios.put(`/routines/${modifiedRoutine.id}`, modifiedRoutine);
+		await axios.put(`/api/routines`, modifiedRoutine);
 	}
 
 	$: excercisesStore.set(data.excercises);

@@ -45,17 +45,15 @@
 			<th>Name</th>
 			<th>Series</th>
 			<th>Reps</th>
-			<th>Weight</th>
 			<th />
 		</tr>
 	</thead>
 	<tbody>
-		{#each workout.excercises as { excercise, series, reps }, index}
+		{#each workout.excercises as { excercise, series, reps }}
 			<tr>
 				<td>{excercise.name}</td>
 				<td>{series}</td>
 				<td>{reps}</td>
-				<td>TODO kg</td>
 				<td class="dropdown dropdown-left">
 					<button class="btn btn-sm btn-ghost">
 						<Icon icon="ellipsis-vertical" />

@@ -8,7 +8,7 @@
 	export let data;
 
 	async function addNewExcercise({detail: excercise}: CustomEvent<Excercise>) {
-		await axios.put(`/excercises`, excercise);
+		await axios.put(`/api/excercises`, excercise);
 	}
 
 	$: excercisesStore.set(data.excercises);

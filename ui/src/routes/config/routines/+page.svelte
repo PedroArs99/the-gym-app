@@ -50,8 +50,9 @@
 	}
 
 	async function upsertRoutine(routine: Partial<Routine>) {
-		const response = await axios.put('/routines', routine);
+		const response = await axios.put('/api/routines', routine);
 
+		isNewModalVisible = false;
 		data.routines = [...data.routines, response.data];
 	}
 </script>
@@ -69,7 +70,6 @@
 			<div class="card hover:bg-base-300 hover:cursor-pointer" on:click={() => goto(`./routines/${routine.id}`)}>
 				<div class="card-body">
 					<h2 class="card-title">{routine.name}</h2>
-					{routine.id}
 					<p><strong>Created At:</strong> {routine.createdAt}</p>
 					<div class="card-actions">
 						<button class="btn btn-primary" on:click={(e) => onDuplicateClick(routine.id, e)}>
