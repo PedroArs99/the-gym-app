@@ -1,11 +1,17 @@
 <script>
 	import Navbar from '$lib/components/layout/Navbar.svelte';
 	import './styles.css';
+	import { navigating } from '$app/stores';
+	import Spinner from '$lib/components/utils/Spinner.svelte';
 </script>
 
 <div class="app">
 	<main>
-		<slot />
+		{#if $navigating}
+			<Spinner />
+		{:else}
+			<slot />
+		{/if}
 	</main>
 
 	<Navbar />

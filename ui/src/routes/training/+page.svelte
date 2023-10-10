@@ -1,5 +1,15 @@
 <script>
-	import Wip from '$lib/components/layout/Wip.svelte';
+	
+
+	import Spinner from '$lib/components/utils/Spinner.svelte';
 </script>
 
-<Wip />
+<div class="page">
+	<h1 class="page-title">
+		Train Today
+	</h1>
+</div>
+
+<Spinner />
+
+

@@ -19,7 +19,7 @@
 	} from '@fortawesome/free-solid-svg-icons';
 
 	export let icon: Icon;
-	export let size: 'sm' | 'md' | 'lg' | '2x' | '3x' | '6x' = 'md';
+	export let size: 'sm' | 'md' | 'lg' | '2x' | '3x' | '4x'| '6x' = 'md';
 	export let spin: boolean = false;
 
 	type Icon =
