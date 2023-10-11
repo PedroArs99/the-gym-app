@@ -3,6 +3,7 @@
 	import Dialog from '$lib/components/Dialog.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import type { Routine } from '$lib/models/routine.model.js';
+	import { toShortDate } from '$lib/pipes/toShortDate';
 	import axios from 'axios';
 
 	type PageData = {
@@ -32,13 +33,13 @@
 		// TODO Move to the backend
 		event.stopPropagation();
 
-		const originalRoutine = data.routines.find((r) => r.id === id);
-		const duplicated = {
-			name: `${originalRoutine?.name} - Copy`,
-			workouts: originalRoutine?.workouts
-		};
+		// const originalRoutine = data.routines.find((r) => r.id === id);
+		// const duplicated = {
+		// 	name: `${originalRoutine?.name} - Copy`,
+		// 	workouts: originalRoutine?.workouts
+		// };
 
-		upsertRoutine(duplicated);		
+		// upsertRoutine(duplicated);		
 	}
 
 	async function createRoutine() {
@@ -46,14 +47,10 @@
 			name: form.name
 		}
 
-		upsertRoutine(routineBody);
-	}
-
-	async function upsertRoutine(routine: Partial<Routine>) {
-		const response = await axios.put('/api/routines', routine);
+		const response = await axios.post('/api/routines', routineBody);
 
 		isNewModalVisible = false;
-		data.routines = [...data.routines, response.data];
+		data.routines = [response.data, ...data.routines];
 	}
 </script>
 
@@ -70,7 +67,7 @@
 			<div class="card hover:bg-base-300 hover:cursor-pointer" on:click={() => goto(`./routines/${routine.id}`)}>
 				<div class="card-body">
 					<h2 class="card-title">{routine.name}</h2>
-					<p><strong>Created At:</strong> {routine.createdAt}</p>
+					<p><strong>Created At:</strong> {toShortDate(routine.createdAt)}</p>
 					<div class="card-actions">
 						<button class="btn btn-primary" on:click={(e) => onDuplicateClick(routine.id, e)}>
 							<Icon icon="copy" size="lg" />

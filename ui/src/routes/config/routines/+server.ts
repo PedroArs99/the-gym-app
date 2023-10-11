@@ -1,7 +1,7 @@
 import { env } from '$env/dynamic/private';
 import axios from 'axios';
 
-export async function PUT({ request }) {
+export async function POST({ request }) {
 	const body = await request.json();
 
 	const response = await axios.put(`${env.API_URL}/routines`, body);

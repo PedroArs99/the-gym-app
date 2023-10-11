@@ -32,49 +32,43 @@ plugins:
 
 functions:
   # Routines
-  deleteRoutine:
-      handler: functions/routine/delete-routine.handler
-      events: 
-          - httpApi:
-              path: '/routines/{id}'
-              method: delete
+  # deleteRoutine:
+  #     handler: functions/routine/delete-routine.handler
+  #     events: 
+  #         - httpApi:
+  #             path: '/routines/{id}'
+  #             method: delete
   getRoutines:
-    handler: functions/routine/get-routines.handler
+    handler: modules/training/functions/routines/get-routines.handler
     events:
         - httpApi:
             path: '/routines'
             method: get
   getRoutineById:
-      handler: functions/routine/get-routine-by-id.handler
+      handler: modules/training/functions/routines/get-routine-by-id.handler
       events:
         - httpApi:
             path: '/routines/{id}'
             method: get
-  upsertRoutine:
-    handler: functions/routine/upsert-routine.handler
+  createRoutine:
+    handler: modules/training/functions/routines/create-routine.handler
     events:
       - httpApi:
           path: '/routines'
-          method: put
+          method: post
   # Excercises
-  deleteExcercise:
-      handler: functions/delete-excercise.handler
-      events: 
-          - httpApi:
-              path: '/excercises/{id}'
-              method: delete
   getExcercises:
-      handler: functions/get-excercises.handler
+      handler: modules/training/functions/excercises/get-excercises.handler
       events:
           - httpApi:
               path: '/excercises'
               method: get
-  upsertExcercise:
-    handler: functions/upsert-excercise.handler
-    events:
-      - httpApi:
-          path: '/excercises'
-          method: put
+  # upsertExcercise:
+  #   handler: functions/upsert-excercise.handler
+  #   events:
+  #     - httpApi:
+  #         path: '/excercises'
+  #         method: put
 
 
 resources:
@@ -98,9 +92,13 @@ resources:
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
+          - AttributeName: createdAt
+            AttributeType: S
         KeySchema:
           - AttributeName: id
             KeyType: HASH
+          - AttributeName: createdAt
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1

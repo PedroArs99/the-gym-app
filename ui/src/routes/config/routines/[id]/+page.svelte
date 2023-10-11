@@ -74,6 +74,7 @@
 
 	$: excercisesStore.set(data.excercises);
 	$: workouts = data.routine.workouts ?? [];
+	$: console.log(data);
 </script>
 
 <svelte:head>
