@@ -1,4 +1,4 @@
-import ExcerciseRepository from "../../repositories/excercise.repository";
+import ExcerciseRepository from "../excercise.repository";
 
 module.exports.handler = async () => {
   try {

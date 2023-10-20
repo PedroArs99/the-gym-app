@@ -1,8 +1,12 @@
-import { AttributeValue, DynamoDBClient, QueryCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
+import {
+  AttributeValue,
+  DynamoDBClient,
+  ScanCommand,
+} from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 
-import { Excercise } from "../models/excercise.model";
-import { Muscles } from "../models/muscles.enum";
+import { Excercise } from "./excercise.model";
+import { Muscles } from "./muscles.enum";
 
 const EXCERCISES_TABLE = process.env.EXCERCISES_TABLE;
 const client = new DynamoDBClient();
@@ -23,7 +27,9 @@ async function getExcercises(): Promise<Excercise[]> {
   return excercises;
 }
 
-function mapDynamoRecordToModel(record: Record<string, AttributeValue>): Excercise {
+function mapDynamoRecordToModel(
+  record: Record<string, AttributeValue>
+): Excercise {
   return {
     id: record.id.S!,
     name: record.name.S!,
@@ -33,6 +39,6 @@ function mapDynamoRecordToModel(record: Record<string, AttributeValue>): Excerci
 
 const ExcerciseRepository = {
   getExcercises,
-}
+};
 
 export default ExcerciseRepository;

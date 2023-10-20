@@ -1,5 +1,5 @@
 import RoutinesRepository from "../../repositories/routines.repository";
-import { HttpRequest } from "../http-request.model";
+import { HttpRequest } from "../../../../common/http-request.model";
 
 module.exports.handler = async (event: HttpRequest) => {
   try {

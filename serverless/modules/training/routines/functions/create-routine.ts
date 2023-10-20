@@ -1,5 +1,5 @@
-import RoutinesRepository from "../../repositories/routines.repository";
-import { HttpRequest } from "../http-request.model";
+import RoutinesRepository from "../routines.repository";
+import { HttpRequest } from "../../../../common/http-request.model";
 
 module.exports.handler = async (event: HttpRequest) => {
   const { name } = JSON.parse(event.body);

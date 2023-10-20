@@ -32,44 +32,31 @@ plugins:
 
 functions:
   # Routines
-  # deleteRoutine:
-  #     handler: functions/routine/delete-routine.handler
-  #     events: 
-  #         - httpApi:
-  #             path: '/routines/{id}'
-  #             method: delete
   getRoutines:
-    handler: modules/training/functions/routines/get-routines.handler
+    handler: modules/training/routines/functions/get-routines.handler
     events:
         - httpApi:
             path: '/routines'
             method: get
   getRoutineById:
-      handler: modules/training/functions/routines/get-routine-by-id.handler
+      handler: modules/training/routines/functions/get-routine-by-id.handler
       events:
         - httpApi:
             path: '/routines/{id}'
             method: get
   createRoutine:
-    handler: modules/training/functions/routines/create-routine.handler
+    handler: modules/training/routines/functions/create-routine.handler
     events:
       - httpApi:
           path: '/routines'
           method: post
   # Excercises
   getExcercises:
-      handler: modules/training/functions/excercises/get-excercises.handler
+      handler: modules/training/excercises/functions/get-excercises.handler
       events:
           - httpApi:
               path: '/excercises'
               method: get
-  # upsertExcercise:
-  #   handler: functions/upsert-excercise.handler
-  #   events:
-  #     - httpApi:
-  #         path: '/excercises'
-  #         method: put
-
 
 resources:
   Resources:
