@@ -1,4 +1,4 @@
-import RoutinesRepository from "../../repositories/routines.repository";
+import RoutinesRepository from "routines/routines.repository";
 
 module.exports.handler = async () => {
   try {

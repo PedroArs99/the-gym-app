@@ -5,6 +5,7 @@
   "dependencies": {
     "express": "^4.18.2",
     "serverless-http": "^3.1.1",
+    "serverless-tscpaths": "^0.0.8",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

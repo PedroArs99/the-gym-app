@@ -4,6 +4,8 @@ frameworkVersion: '3'
 custom:
   excercisesTableName: 'excercises-table-${sls:stage}'
   routinesTableName: 'routines-table-${sls:stage}'
+  tscpaths:
+    - routines: modules/training/routines
 
 provider:
   name: aws
@@ -29,6 +31,11 @@ provider:
 
 plugins:
   - serverless-plugin-typescript
+  - serverless-tscpaths
+
+package:
+  patterns:
+    - routines
 
 functions:
   # Routines

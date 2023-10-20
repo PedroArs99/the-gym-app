@@ -1,14 +1,13 @@
 import {
   AttributeValue,
   DynamoDBClient,
-  GetItemCommand,
   QueryCommand,
   ScanCommand,
 } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, PutCommand, PutCommandInput } from "@aws-sdk/lib-dynamodb";
 import { v4 as uuidv4 } from "uuid";
 
-import { Routine, Workout, WorkoutExcercise } from "../models/routine.model";
+import { Routine, Workout, WorkoutExcercise } from "./routine.model";
 
 
 const ROUTINES_TABLE = process.env.ROUTINES_TABLE;
