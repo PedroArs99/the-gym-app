@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { Workout, WorkoutExcercise } from '$lib/models/routine.model';
 	import { createEventDispatcher } from 'svelte';
-	import AddExcerciseToWorkoutDialog from './AddExcerciseToWorkoutDialog.svelte';
 	import Icon from '../Icon.svelte';
 	import { toCamelCase } from '$lib/pipes/toCamelCase';
 
@@ -75,16 +74,6 @@
 		{/each}
 	</tbody>
 </table>
-
-<button class="btn w-full" on:click={() => (isDialogOpen = true)}>
-	<span>Add Excercise</span>
-</button>
-
-<AddExcerciseToWorkoutDialog
-	id="add-excercise-{workout.number}"
-	{isDialogOpen}
-	on:close={() => (isDialogOpen = false)}
-	on:confirm={addNewExcercise} />
 
 <style lang="postcss">
 	.workout-header {
