@@ -2,7 +2,6 @@ service: the-gym-app
 frameworkVersion: '3'
 
 custom:
-  excercisesTableName: 'excercises-table-${sls:stage}'
   routinesTableName: 'routines-table-${sls:stage}'
   tscpaths:
     - routines: modules/training/routines
@@ -23,10 +22,8 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           Resource:
-            - Fn::GetAtt: [ ExcercisesTable, Arn ]
             - Fn::GetAtt: [ RoutinesTable, Arn ]
   environment:
-    EXCERCISES_TABLE: ${self:custom.excercisesTableName}
     ROUTINES_TABLE: ${self:custom.routinesTableName}
 
 plugins:
@@ -67,19 +64,6 @@ functions:
 
 resources:
   Resources:
-    ExcercisesTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        TableName: ${self:custom.excercisesTableName}
     RoutinesTable:
       Type: AWS::DynamoDB::Table
       Properties:
