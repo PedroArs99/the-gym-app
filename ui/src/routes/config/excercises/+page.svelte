@@ -1,5 +1,5 @@
 <script lang="ts">
-	import MuscleExcercises from '$lib/components/excercises/MuscleExcercises.svelte';
+	import MuscleExcercises from '$lib/components/training/excercises/MuscleExcercises.svelte';
 	import type { Excercise } from '$lib/models/excercise.model.js';
 	import { Muscles } from '$lib/models/muscles.enum';
 	import { excercisesStore } from '$lib/stores/excercises.store.js';
@@ -8,7 +8,7 @@
 	export let data;
 
 	async function addNewExcercise({detail: excercise}: CustomEvent<Excercise>) {
-		await axios.put(`/api/excercises`, excercise);
+		await axios.post(`/api/excercises`, excercise);
 	}
 
 	$: excercisesStore.set(data.excercises);

@@ -2,8 +2,10 @@ service: the-gym-app
 frameworkVersion: '3'
 
 custom:
+  mongoConnStr: ${ssm:/the-gym-app/dev/mongo-connection-string}
   routinesTableName: 'routines-table-${sls:stage}'
   tscpaths:
+    - common: common
     - routines: modules/training/routines
 
 provider:
@@ -24,6 +26,7 @@ provider:
           Resource:
             - Fn::GetAtt: [ RoutinesTable, Arn ]
   environment:
+    MONGO_CONNECTION_STRING: ${self:custom.mongoConnStr}
     ROUTINES_TABLE: ${self:custom.routinesTableName}
 
 plugins:
@@ -32,6 +35,7 @@ plugins:
 
 package:
   patterns:
+    - common
     - routines
 
 functions:
@@ -55,6 +59,12 @@ functions:
           path: '/routines'
           method: post
   # Excercises
+  createExcercises:
+      handler: modules/training/excercises/functions/create-excercises.handler
+      events:
+          - httpApi:
+              path: '/excercises'
+              method: post
   getExcercises:
       handler: modules/training/excercises/functions/get-excercises.handler
       events:

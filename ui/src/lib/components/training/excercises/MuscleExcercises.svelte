@@ -14,8 +14,9 @@
 
 	function createExcercise({ detail: excercise }: CustomEvent<Excercise>) {
 		excercisesStore.addNewExcercise(excercise);
-		isDialogOpen = false;
+		
 		dispatch('create', excercise);
+		isDialogOpen = false;
 	}
 
 	$: excercises = $excercisesStore.filter((excercise) => excercise.muscle === muscle);

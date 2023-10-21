@@ -3,7 +3,8 @@
     "allowJs": true,
     "baseUrl": "./",
     "paths": {
-      "routines/*": ["./modules/training/routines/*"],
+      "common/*": ["./common/*"],
+      "routines/*": ["./modules/training/routines/*"]
     },
     "preserveConstEnums": true,
     "strictNullChecks": true,

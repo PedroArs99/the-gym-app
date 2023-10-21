@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Muscles } from '$lib/models/muscles.enum';
 	import { createEventDispatcher } from 'svelte';
-	import Dialog from '../Dialog.svelte';
+	import Dialog from '../../Dialog.svelte';
 	import type { Excercise } from '$lib/models/excercise.model';
 
 	type FormState = {
