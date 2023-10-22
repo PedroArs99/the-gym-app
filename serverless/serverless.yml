@@ -30,6 +30,7 @@ provider:
     ROUTINES_TABLE: ${self:custom.routinesTableName}
 
 plugins:
+  - serverless-offline
   - serverless-plugin-typescript
   - serverless-tscpaths
 
@@ -40,24 +41,31 @@ package:
 
 functions:
   # Routines
-  getRoutines:
-    handler: modules/training/routines/functions/get-routines.handler
-    events:
-        - httpApi:
-            path: '/routines'
-            method: get
-  getRoutineById:
-      handler: modules/training/routines/functions/get-routine-by-id.handler
-      events:
-        - httpApi:
-            path: '/routines/{id}'
-            method: get
   createRoutine:
     handler: modules/training/routines/functions/create-routine.handler
     events:
       - httpApi:
           path: '/routines'
           method: post
+  createWorkout:
+    handler: modules/training/routines/functions/create-workout.handler
+    events:
+      - httpApi:
+          path: '/routines/{id}/workouts'
+          method: post
+  getRoutineById:
+      handler: modules/training/routines/functions/get-routine-by-id.handler
+      events:
+        - httpApi:
+            path: '/routines/{id}'
+            method: get
+  getRoutines:
+    handler: modules/training/routines/functions/get-routines.handler
+    events:
+        - httpApi:
+            path: '/routines'
+            method: get
+  
   # Excercises
   createExcercises:
       handler: modules/training/excercises/functions/create-excercises.handler
