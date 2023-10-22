@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Workout, WorkoutExcercise } from '$lib/models/routine.model';
 	import { createEventDispatcher } from 'svelte';
-	import Icon from '../Icon.svelte';
+	import Icon from '../../../Icon.svelte';
 	import { toCamelCase } from '$lib/pipes/toCamelCase';
 
 	export let workout: Workout;

@@ -8,6 +8,7 @@ export interface Routine {
 }
 
 export interface Workout {
+  id: string;
   number: number;
   excercises: WorkoutExcercise[];
 }

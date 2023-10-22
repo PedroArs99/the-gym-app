@@ -1,16 +1,17 @@
-import RoutinesRepository from "../database/routines.repository";
-import { HttpRequest } from "../../../../common/http-request.model";
+import RoutinesRepository from "routines/database/routines.repository";
+import { HttpRequest } from "common/http-request.model";
 
 module.exports.handler = async (event: HttpRequest) => {
-  const { name } = JSON.parse(event.body);
+  const routineId = event.pathParameters.id;
+  const workout = JSON.parse(event.body);
 
   console.debug(`Incoming Event: ${JSON.stringify(event, null, 2)}`);
 
   try {
-    const routine = await RoutinesRepository.createRoutine(name);
+    const result = await RoutinesRepository.createWorkout(routineId, workout);
 
     return {
-      body: JSON.stringify(routine, null, 2),
+      body: JSON.stringify(result),
       headers: {
         "Content-Type": "application/json",
       },

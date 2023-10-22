@@ -7,7 +7,6 @@
 	import { excercisesStore as excercises } from '$lib/stores/excercises.store';
 	import type { Excercise } from '$lib/models/excercise.model';
 	import NumericInput from '$lib/components/utils/NumericInput.svelte';
-	import Workout from '$lib/components/routines/Workout.svelte';
 
 	type FormState = {
 		selectedMuscleGroup?: Muscles;

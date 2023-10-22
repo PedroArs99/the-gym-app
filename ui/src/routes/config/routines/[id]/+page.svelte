@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Workout from '$lib/components/routines/Workout.svelte';
+	import Workout from '$lib/components/training/routines/workouts/Workout.svelte';
 	import CreateWorkoutDialog from '$lib/components/training/routines/workouts/CreateWorkoutDialog.svelte';
 	import type { Excercise } from '$lib/models/excercise.model';
 	import type { Routine, WorkoutExcercise } from '$lib/models/routine.model';
@@ -23,7 +23,7 @@
 
 		workouts = [...workouts, newWorkout];
 
-		await axios.post(`/api/routines/${data.routine.id}/workouts`)
+		await axios.post(`/api/routines/${data.routine.id}/workouts`, newWorkout);
 	}
 
 	$: excercisesStore.set(data.excercises);
