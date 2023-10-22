@@ -1,10 +1,10 @@
-import RoutinesRepository from "../routines.repository";
-import { HttpRequest } from "../../../../common/http-request.model";
+import RoutinesRepository from "routines/database/routines.repository";
+import { HttpRequest } from "common/http-request.model";
 
 module.exports.handler = async (event: HttpRequest) => {
   try {
     const routineId =
-      event.pathParameters?.["id"] || "e54e9248-a4cf-49a2-82ff-10c494b012ff";
+      event.pathParameters?.["id"];
 
     const routine = await RoutinesRepository.getRoutineById(routineId);
 

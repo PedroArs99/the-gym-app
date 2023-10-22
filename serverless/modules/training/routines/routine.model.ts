@@ -1,5 +1,7 @@
+import { Excercise } from "../excercises/excercise.model";
+
 export interface Routine {
-  createdAt: Date | string;
+  createdAt: Date;
   id: string;
   name: string;
   workouts: Workout[];
@@ -11,7 +13,7 @@ export interface Workout {
 }
 
 export type WorkoutExcercise = {
-  excercise: string;
+  excercise: Excercise;
   series: number;
   reps: number;
 };
