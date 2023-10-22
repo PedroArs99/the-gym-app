@@ -4,6 +4,7 @@
     "baseUrl": "./",
     "paths": {
       "common/*": ["./common/*"],
+      "excercises/*": ["./modules/training/excercises/*"],
       "routines/*": ["./modules/training/routines/*"]
     },
     "preserveConstEnums": true,

@@ -6,6 +6,7 @@ custom:
   routinesTableName: 'routines-table-${sls:stage}'
   tscpaths:
     - common: common
+    - excercises: modules/training/excercises
     - routines: modules/training/routines
 
 provider:
@@ -37,6 +38,7 @@ plugins:
 package:
   patterns:
     - common
+    - excercises
     - routines
 
 functions:
