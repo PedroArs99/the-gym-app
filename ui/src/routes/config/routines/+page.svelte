@@ -21,27 +21,6 @@
 		name: ''
 	};
 
-	async function onDeleteRoutine(id: string, event: Event) {
-		event.stopPropagation();
-
-		data.routines = data.routines.filter((r) => r.id !== id);
-
-		await axios.delete(`/api/routines/${id}`);
-	}
-
-	async function onDuplicateClick(id: string, event: Event) {
-		// TODO Move to the backend
-		event.stopPropagation();
-
-		// const originalRoutine = data.routines.find((r) => r.id === id);
-		// const duplicated = {
-		// 	name: `${originalRoutine?.name} - Copy`,
-		// 	workouts: originalRoutine?.workouts
-		// };
-
-		// upsertRoutine(duplicated);		
-	}
-
 	async function createRoutine() {
 		const routineBody = {
 			name: form.name
@@ -68,16 +47,6 @@
 				<div class="card-body">
 					<h2 class="card-title">{routine.name}</h2>
 					<p><strong>Created At:</strong> {toShortDate(routine.createdAt)}</p>
-					<div class="card-actions">
-						<button class="btn btn-primary" on:click={(e) => onDuplicateClick(routine.id, e)}>
-							<Icon icon="copy" size="lg" />
-							<span>Duplicate</span>
-						</button>
-						<button class="btn btn-primary" on:click={(e) => onDeleteRoutine(routine.id, e)}>
-							<Icon icon="trash" size="lg" />
-							<span>Delete</span>
-						</button>
-					</div>
 				</div>
 			</div>
 		{/each}
@@ -102,11 +71,6 @@
 	.card {
 		@apply border border-primary lg:w-96;
 	}
-
-	.card-actions {
-		justify-content: space-around;
-	}
-
 	.routines-container {
 		@apply flex flex-col lg:flex-row gap-3;
 	}

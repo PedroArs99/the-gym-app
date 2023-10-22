@@ -12,7 +12,7 @@
 		routine: Routine;
 	};
 
-	let isNewWorkoutModalVisible = true;
+	let isNewWorkoutModalVisible = false;
 
 	async function saveWorkout(event: CustomEvent<WorkoutExcercise[]>) {
 		const workoutNumber = workouts.length;
@@ -60,13 +60,6 @@
 	on:save={saveWorkout} />
 
 <style lang="postcss">
-	.header {
-		display: flex;
-		align-items: center;
-
-		@apply gap-3;
-	}
-
 	.workouts {
 		display: flex;
 		flex-wrap: wrap;
