@@ -1,11 +1,9 @@
-import mongoose from "mongoose";
+import mongoose, { model } from "mongoose";
 import { Routine, Workout } from "routines/routine.model";
 import { v4 as uuidv4 } from "uuid";
-import {
-  RoutineModel,
-  toModel,
-  workoutToEntity,
-} from "./routine.entity";
+import { RoutineModel, toModel, toModelWithWorkouts, workoutToEntity } from "./routine.entity";
+
+import { ExcerciseEntity, excerciseSchema } from "excercises/database/excercise.entity";
 
 const mongoConnStr = process.env.MONGO_CONNECTION_STRING;
 
@@ -43,11 +41,22 @@ async function createWorkout(routineId: string, newWorkout: Workout) {
 async function getRoutineById(id: string) {
   await mongoose.connect(mongoConnStr!);
 
-  const routine = await RoutineModel.findById(id);
+  model<ExcerciseEntity>("Excercise", excerciseSchema);
+
+  const routine = await RoutineModel.findById(id).populate({
+    path: "workouts",
+    populate: {
+      path: "excercises",
+      populate: {
+        path: "excercise",
+        model: "Excercise",
+      },
+    },
+  });
 
   mongoose.disconnect();
 
-  return routine ? toModel(routine) : null;
+  return routine ? toModelWithWorkouts(routine) : null;
 }
 
 async function getRoutines(): Promise<Routine[]> {

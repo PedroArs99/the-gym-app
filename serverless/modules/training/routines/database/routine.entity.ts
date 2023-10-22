@@ -1,3 +1,5 @@
+import { ExcerciseEntity } from "excercises/database/excercise.entity";
+import { Excercise } from "excercises/excercise.model";
 import { Schema, model } from "mongoose";
 import { Routine, Workout } from "routines/routine.model";
 import { v4 as uuidv4 } from "uuid";
@@ -16,7 +18,7 @@ export interface WorkoutEntity {
 }
 
 export interface WorkoutExcerciseEntity {
-  excercise: string;
+  excercise: string | ExcerciseEntity;
   series: number;
   reps: number;
 }
@@ -31,7 +33,7 @@ const routinesSchema = new Schema<RoutineEntity>({
       number: { type: Number, required: true },
       excercises: [
         {
-          excercise: { type: String, required: true, ref: "Excercise" },
+          excercise: { type: String, required: true, ref: "excercise" },
           series: { type: Number, required: true },
           reps: { type: Number, required: true },
         },
@@ -51,6 +53,14 @@ export function toModel(entity: RoutineEntity): Routine {
   };
 }
 
+export function toModelWithWorkouts(entity: RoutineEntity): Routine {
+  const model = toModel(entity);
+
+  model.workouts = entity.workouts.map(workout => workoutToModel(workout));
+
+  return model;
+}
+
 export function workoutToEntity(model: Workout): WorkoutEntity {
   return {
     _id: model.id ?? uuidv4(),
@@ -59,6 +69,22 @@ export function workoutToEntity(model: Workout): WorkoutEntity {
       excercise: excercise.excercise.id!,
       series: excercise.series,
       reps: excercise.reps,
+    })),
+  };
+}
+
+export function workoutToModel(entity: WorkoutEntity): Workout {
+  return {
+    id: entity._id,
+    number: entity.number,
+    excercises: entity.excercises.map(({excercise, series, reps}) => ({
+      excercise: {
+        name: (excercise as ExcerciseEntity).name,
+        id: (excercise as ExcerciseEntity)._id,
+        muscle: (excercise as ExcerciseEntity).muscle,
+      },
+      series,
+      reps,
     })),
   };
 }
