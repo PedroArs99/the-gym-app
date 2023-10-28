@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { env } from '$env/dynamic/private';
+import { buildJsonResponse } from '$lib/api/utils/response-utils.js';
 
 export async function POST({ params, request }) {
 	const body = await request.json();
 
 	const response = await axios.post(`${env.API_URL}/routines/${params.id}/workouts`, body);
 
-	return new Response(response.data, { status: 201 });
+	return buildJsonResponse(response.data, 201);
 }

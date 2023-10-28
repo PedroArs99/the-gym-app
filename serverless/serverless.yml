@@ -41,6 +41,12 @@ functions:
       - httpApi:
           path: '/routines/{id}/workouts'
           method: post
+  deleteWorkout:
+    handler: modules/training/routines/functions/delete-workout.handler
+    events:
+      - httpApi:
+          path: '/routines/{routineId}/workouts/{workoutId}'
+          method: delete
   getRoutineById:
       handler: modules/training/routines/functions/get-routine-by-id.handler
       events:

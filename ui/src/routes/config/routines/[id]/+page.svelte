@@ -14,16 +14,20 @@
 
 	let isNewWorkoutModalVisible = false;
 
+	async function deleteWorkout(workoutId?: string) {
+		workouts = workouts.filter(workout => workout.id !== workoutId);
+		axios.delete(`/api/routines/${data.routine.id}/workouts/${workoutId}`);
+	}
+
 	async function saveWorkout(event: CustomEvent<WorkoutExcercise[]>) {
 		const workoutNumber = workouts.length;
 		const newWorkout = {
 			number: workoutNumber,
-			excercises: event.detail,
-		}
+			excercises: event.detail
+		};
 
-		workouts = [...workouts, newWorkout];
-
-		await axios.post(`/api/routines/${data.routine.id}/workouts`, newWorkout);
+		const response = await axios.post(`/api/routines/${data.routine.id}/workouts`, newWorkout);
+		workouts = [...workouts, response.data];
 	}
 
 	$: excercisesStore.set(data.excercises);
@@ -43,7 +47,7 @@
 	<div class="workouts">
 		{#each workouts as workout}
 			<div class="w-100 p-3 lg:w-1/2" transition:slide>
-				<Workout {workout} />
+				<Workout {workout} on:delete={() => deleteWorkout(workout.id)} />
 			</div>
 		{/each}
 	</div>
