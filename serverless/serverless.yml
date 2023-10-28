@@ -3,7 +3,6 @@ frameworkVersion: '3'
 
 custom:
   mongoConnStr: ${ssm:/the-gym-app/dev/mongo-connection-string}
-  routinesTableName: 'routines-table-${sls:stage}'
   tscpaths:
     - common: common
     - excercises: modules/training/excercises
@@ -11,24 +10,11 @@ custom:
 
 provider:
   name: aws
+  deploymentMethod: direct
   runtime: nodejs18.x
   region: eu-central-1
-  iam:
-    role:
-      statements:
-        - Effect: Allow
-          Action:
-            - dynamodb:Query
-            - dynamodb:Scan
-            - dynamodb:GetItem
-            - dynamodb:PutItem
-            - dynamodb:UpdateItem
-            - dynamodb:DeleteItem
-          Resource:
-            - Fn::GetAtt: [ RoutinesTable, Arn ]
   environment:
     MONGO_CONNECTION_STRING: ${self:custom.mongoConnStr}
-    ROUTINES_TABLE: ${self:custom.routinesTableName}
 
 plugins:
   - serverless-offline
@@ -81,23 +67,3 @@ functions:
           - httpApi:
               path: '/excercises'
               method: get
-
-resources:
-  Resources:
-    RoutinesTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-          - AttributeName: createdAt
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-          - AttributeName: createdAt
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        TableName: ${self:custom.routinesTableName}
