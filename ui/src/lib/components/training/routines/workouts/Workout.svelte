@@ -6,22 +6,7 @@
 
 	export let workout: Workout;
 
-	let isDialogOpen = false;
 	let dispatch = createEventDispatcher();
-
-	function addNewExcercise(event: CustomEvent<WorkoutExcercise>) {
-		const modifiedWorkout = {
-			...workout,
-			excercises: [...workout.excercises, event.detail]
-		};
-
-		dispatch('change', modifiedWorkout);
-		isDialogOpen = false;
-	}
-
-	function deleteWorkout(workoutNumber: number) {
-		dispatch('delete', workoutNumber);
-	}
 
 	$: groups = workout.excercises
 		.map(({ excercise }) => excercise.muscle)
@@ -31,11 +16,6 @@
 
 <div class="workout-header">
 	<h2 class="header">Workout #{workout.number} - {groups}</h2>
-	<div class="actions">
-		<button class="btn btn-ghost" on:click={() => deleteWorkout(workout.number)}>
-			<Icon icon="trash" size="lg" />
-		</button>
-	</div>
 </div>
 
 <table class="table table-sm lg:table-lg table-pin-rows border border-primary">
@@ -44,7 +24,6 @@
 			<th>Name</th>
 			<th>Series</th>
 			<th>Reps</th>
-			<th />
 		</tr>
 	</thead>
 	<tbody>
@@ -53,23 +32,6 @@
 				<td>{excercise.name}</td>
 				<td>{series}</td>
 				<td>{reps}</td>
-				<td class="dropdown dropdown-left">
-					<button class="btn btn-sm btn-ghost">
-						<Icon icon="ellipsis-vertical" />
-					</button>
-					<ul class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box border items-start">
-						<li class="w-full">
-							<button class="btn btn-sm btn-ghost justify-start">
-								<Icon icon="trash" /> Delete
-							</button>
-						</li>
-						<li class="w-full text-left">
-							<button class="btn btn-sm btn-ghost justify-start">
-								<Icon icon="pencil" /> Edit
-							</button>
-						</li>
-					</ul>
-				</td>
 			</tr>
 		{/each}
 	</tbody>

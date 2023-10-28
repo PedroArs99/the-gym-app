@@ -91,7 +91,7 @@ resource "aws_ecs_task_definition" "the-gym-app-task_definition" {
       portMappings = [
         {
           containerPort = 3000
-          hostPort = 80
+          hostPort = 3000
         }
       ]
     }
