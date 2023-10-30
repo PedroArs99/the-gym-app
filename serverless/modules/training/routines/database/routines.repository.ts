@@ -71,7 +71,6 @@ async function getRoutineById(id: string) {
   model<ExcerciseEntity>("Excercise", excerciseSchema);
 
   const routine = await RoutineModel.findById(id)
-    .sort({ number: 1 })
     .populate({
       path: "workouts",
       populate: {
