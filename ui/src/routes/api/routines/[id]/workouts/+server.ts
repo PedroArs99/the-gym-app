@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { env } from '$env/dynamic/private';
-import { buildJsonResponse } from '$lib/api/utils/response-utils.js';
+import { buildJsonResponse } from '$lib/utils/response-utils.js';
 
 export async function POST({ params, request }) {
 	const body = await request.json();
