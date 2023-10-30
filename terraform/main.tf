@@ -54,6 +54,18 @@ resource "aws_main_route_table_association" "vpc_custom_main_rt_association" {
   route_table_id = aws_route_table.vpc_main_route_table.id
 }
 
+resource "aws_route53_record" "www" {
+  zone_id = var.hosted_zone_id
+  name    = var.alb_alias
+  type    = "A"
+
+  alias {
+    name                   = aws_alb.application_load_balancer.dns_name
+    zone_id                = aws_alb.application_load_balancer.zone_id
+    evaluate_target_health = true
+  }
+}
+
 // ALB
 resource "aws_alb" "application_load_balancer" {
   name               = var.app_name
@@ -63,6 +75,10 @@ resource "aws_alb" "application_load_balancer" {
   ]
   # security group
   security_groups = ["${aws_security_group.load_balancer_security_group.id}"]
+
+  tags = {
+    Name = var.app_name
+  }
 }
 
 resource "aws_security_group" "load_balancer_security_group" {
@@ -81,6 +97,10 @@ resource "aws_security_group" "load_balancer_security_group" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Name = var.app_name
+  }
 }
 
 resource "aws_lb_target_group" "alb_target_group" {
@@ -89,6 +109,10 @@ resource "aws_lb_target_group" "alb_target_group" {
   protocol    = "HTTP"
   target_type = "ip"
   vpc_id      = aws_vpc.main.id
+
+  tags = {
+    Name = var.app_name
+  }
 }
 
 resource "aws_lb_listener" "listener" {
@@ -99,11 +123,19 @@ resource "aws_lb_listener" "listener" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.alb_target_group.arn
   }
+
+  tags = {
+    Name = var.app_name
+  }
 }
 
 // ECS --------------------------------------------------------------------------------------------
 resource "aws_ecs_cluster" "main" {
   name = var.app_name
+
+  tags = {
+    Name = var.app_name
+  }
 }
 
 resource "aws_ecs_service" "the-gym-app" {
@@ -126,6 +158,10 @@ resource "aws_ecs_service" "the-gym-app" {
     ]
     security_groups  = [aws_security_group.the-gym-app-sg.id]
     assign_public_ip = true
+  }
+
+  tags = {
+    Name = var.app_name
   }
 }
 
