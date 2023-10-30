@@ -35,7 +35,7 @@ async function createRoutine(name: string): Promise<Routine> {
 async function createWorkout(routineId: string, newWorkout: Workout) {
   await mongoose.connect(mongoConnStr!);
 
-  const newWorkoutEntity = workoutToEntity(newWorkout)
+  const newWorkoutEntity = workoutToEntity(newWorkout);
   await RoutineModel.updateOne(
     { _id: routineId },
     {
@@ -70,16 +70,18 @@ async function getRoutineById(id: string) {
 
   model<ExcerciseEntity>("Excercise", excerciseSchema);
 
-  const routine = await RoutineModel.findById(id).populate({
-    path: "workouts",
-    populate: {
-      path: "excercises",
+  const routine = await RoutineModel.findById(id)
+    .sort({ number: 1 })
+    .populate({
+      path: "workouts",
       populate: {
-        path: "excercise",
-        model: "Excercise",
+        path: "excercises",
+        populate: {
+          path: "excercise",
+          model: "Excercise",
+        },
       },
-    },
-  });
+    });
 
   mongoose.disconnect();
 
