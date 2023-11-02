@@ -26,7 +26,7 @@ jobs:
     - name: serverless deploy
       uses: serverless/github-action@v3.2
       with:
-        args: deploy
+        args: -c "cd ./serverless && serverless deploy"
         working-directory: ./serverless
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
