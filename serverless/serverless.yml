@@ -1,3 +1,5 @@
+org: pedroars99
+app: the-gym-app
 service: the-gym-app
 frameworkVersion: '3'
 
