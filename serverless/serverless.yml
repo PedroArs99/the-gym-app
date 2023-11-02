@@ -47,6 +47,12 @@ functions:
       - httpApi:
           path: '/routines/{routineId}/workouts/{workoutId}'
           method: delete
+  getLatestRoutine:
+      handler: modules/training/routines/functions/get-latest-routine.handler
+      events:
+        - httpApi:
+            path: '/routines/latest'
+            method: get
   getRoutineById:
       handler: modules/training/routines/functions/get-routine-by-id.handler
       events:
@@ -59,7 +65,7 @@ functions:
         - httpApi:
             path: '/routines'
             method: get
-  
+
   # Excercises
   createExcercises:
       handler: modules/training/excercises/functions/create-excercises.handler

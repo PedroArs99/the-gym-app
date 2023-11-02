@@ -25,8 +25,6 @@
 			weekTrainings.set(weekDay, training);
 		});
 	});
-
-	$: console.log(weekTrainings);
 </script>
 
 <div class="page">

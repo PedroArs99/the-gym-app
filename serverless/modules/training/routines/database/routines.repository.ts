@@ -65,12 +65,16 @@ async function deleteWorkout(routineId: string, workoutId: string) {
   mongoose.disconnect();
 }
 
-async function getRoutineById(id: string) {
+async function getLatestRoutine() {
   await mongoose.connect(mongoConnStr!);
 
   model<ExcerciseEntity>("Excercise", excerciseSchema);
 
-  const routine = await RoutineModel.findById(id)
+  const queryResult = await RoutineModel.find()
+    .sort({
+      createdAt: "descending",
+    })
+    .limit(1)
     .populate({
       path: "workouts",
       populate: {
@@ -81,6 +85,27 @@ async function getRoutineById(id: string) {
         },
       },
     });
+
+  mongoose.disconnect();
+
+  return queryResult.length === 1 ? toModelWithWorkouts(queryResult[0]) : null;
+}
+
+async function getRoutineById(id: string) {
+  await mongoose.connect(mongoConnStr!);
+
+  model<ExcerciseEntity>("Excercise", excerciseSchema);
+
+  const routine = await RoutineModel.findById(id).populate({
+    path: "workouts",
+    populate: {
+      path: "excercises",
+      populate: {
+        path: "excercise",
+        model: "Excercise",
+      },
+    },
+  });
 
   mongoose.disconnect();
 
@@ -101,6 +126,7 @@ const RoutinesRepository = {
   createRoutine,
   createWorkout,
   deleteWorkout,
+  getLatestRoutine,
   getRoutineById,
   getRoutines,
 };
