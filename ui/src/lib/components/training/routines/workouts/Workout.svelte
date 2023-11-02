@@ -3,24 +3,20 @@
 	import { createEventDispatcher } from 'svelte';
 	import Icon from '../../../Icon.svelte';
 	import { toCamelCase } from '$lib/pipes/toCamelCase';
+	import { toWorkoutDisplayName } from '$lib/pipes/toWorkoutDisplayName';
 
 	export let workout: Workout;
-	
+
 	const dispatch = createEventDispatcher();
-	
+
 	function deleteWorkout() {
 		dispatch('delete');
 	}
-
-	$: groups = workout.excercises
-		.map(({ excercise }) => excercise.muscle)
-		.reduce((acc, currentValue) => (acc.includes(currentValue) ? acc : [...acc, currentValue]), new Array<string>())
-		.map((group) => toCamelCase(group));
 </script>
 
 <div class="workout">
 	<div class="workout-header">
-		<h2 class="header">Workout #{workout.number} - {groups}</h2>
+		<h2 class="header">{toWorkoutDisplayName(workout)}</h2>
 
 		<button class="btn btn-ghost" on:click={deleteWorkout}>
 			<Icon icon="trash" size="lg" />

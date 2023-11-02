@@ -20,7 +20,7 @@
 }
 
 .page-subtitle {
-	@apply pb-3 text-left text-4xl font-semibold;
+	@apply p-2 text-xl font-semibold;
 }
 
 .header {
