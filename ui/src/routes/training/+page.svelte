@@ -1,50 +1,49 @@
 <script lang="ts">
-	import TrainingHistoryCard from '$lib/components/training/TrainingHistoryCard.svelte';
 	import WorkoutTrainingCard from '$lib/components/training/WorkoutTrainingCard.svelte';
-	import type { Routine } from '$lib/models/routine.model';
+	import ActiveTraining from '$lib/components/training/ActiveTraining.svelte';
+	import type { Routine, Workout } from '$lib/models/routine.model';
+	import { TrainingService } from '$lib/services/training.service';
 	import type { Training } from '$lib/models/training.model';
-	import { now, parseDate } from '$lib/utils/date-utils';
-	import type { Dayjs } from 'dayjs';
 	import { onMount } from 'svelte';
 
 	type PageData = {
 		routine: Routine;
-		trainings: Training[];
 	};
 
 	export let data: PageData;
-	let weekTrainings: Map<Dayjs, Training | undefined> = new Map();
+	let activeTraining: Training | undefined = undefined;
+
+	function finishTraining() {
+		TrainingService.finishTraining();
+		activeTraining = undefined;
+	}
+
+	function startTraining(workout: Workout) {
+		TrainingService.startTraining(data.routine.id, workout.id!);
+		activeTraining = TrainingService.getActiveTraining();
+	}
 
 	onMount(() => {
-		weekTrainings = new Map();
-		const lastSunday = now().subtract(now().day(), 'day');
-		const weekDays = [...Array(7).keys()].map((i) => lastSunday.add(i, 'day'));
-
-		weekDays.forEach((weekDay) => {
-			const training = data.trainings.find(
-				(t) => parseDate(t.date).format('DD-MM-YYYY') === weekDay.format('DD-MM-YYYY')
-			);
-			weekTrainings.set(weekDay, training);
-		});
+		activeTraining = TrainingService.getActiveTraining();
 	});
+
+	$: activeWorkout = data.routine.workouts.find((w) => w.id === activeTraining?.workoutId);
 </script>
 
 <div class="page">
 	<h1 class="page-title">Trainings</h1>
-	
+
 	<div class="page-content">
-		<div class="trainings">
-			{#each weekTrainings.entries() as [date, training]}
-				<TrainingHistoryCard {date} {training} />
-			{/each}
-		</div>
-	
-		<h2 class="page-subtitle">Choose a workout</h2>
-		<div class="available-workouts">
-			{#each data.routine.workouts as workout}
-				<WorkoutTrainingCard {workout} />
-			{/each}
-		</div>
+		{#if activeWorkout}
+			<ActiveTraining {activeWorkout} on:finishTraining={finishTraining} />
+		{:else}
+			<h2 class="page-subtitle">Choose a workout</h2>
+			<div class="available-workouts">
+				{#each data.routine.workouts as workout}
+					<WorkoutTrainingCard {workout} on:startTraing={() => startTraining(workout)} />
+				{/each}
+			</div>
+		{/if}
 	</div>
 </div>
 
