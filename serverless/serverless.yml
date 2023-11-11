@@ -76,8 +76,16 @@ functions:
               path: '/excercises'
               method: post
   getExcercises:
-      handler: modules/training/excercises/functions/get-excercises.handler
-      events:
-          - httpApi:
-              path: '/excercises'
-              method: get
+    handler: modules/training/excercises/functions/get-excercises.handler
+    events:
+        - httpApi:
+            path: '/excercises'
+            method: get
+  
+  # Trainings
+  registerTraining:
+    handler: modules/training/history/functions/register-training.handler
+    events:
+      - httpApi:
+          path: '/training'
+          method: post

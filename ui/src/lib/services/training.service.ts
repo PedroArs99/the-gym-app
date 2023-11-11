@@ -1,5 +1,6 @@
 import type { Training } from '$lib/models/training.model';
 import { now } from '$lib/utils/date-utils';
+import axios from 'axios';
 
 function getActiveTraining(): Training | undefined {
 	const currentTraining = localStorage.getItem('training.current');
@@ -11,8 +12,22 @@ function getActiveTraining(): Training | undefined {
 	}
 }
 
-function finishTraining() {
-	localStorage.removeItem('training.current');
+async function finishTraining() {
+	const currentTraining = localStorage.getItem('training.current');
+
+	if (currentTraining) {
+		const parsedCurrentTraining = JSON.parse(currentTraining) as Training;
+
+		await axios.post('/api/training', {
+			date: new Date().toISOString(),
+			routineId: parsedCurrentTraining.routineId,
+			workoutId: parsedCurrentTraining.workoutId
+		});
+
+		localStorage.removeItem('training.current');
+	} else {
+		throw new Error("Errot: There is no active current training!")
+	}
 };
 
 function startTraining(routineId: string, workoutId: string) {
