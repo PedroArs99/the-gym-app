@@ -4,4 +4,5 @@ export type Excercise = {
   id?: string;
   name: string;
   muscle: Muscles;
-}
+  loads?: Map<string, number>;
+};

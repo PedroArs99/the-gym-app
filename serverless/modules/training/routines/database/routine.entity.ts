@@ -82,6 +82,7 @@ export function workoutToModel(entity: WorkoutEntity): Workout {
         name: (excercise as ExcerciseEntity).name,
         id: (excercise as ExcerciseEntity)._id,
         muscle: (excercise as ExcerciseEntity).muscle,
+        loads: (excercise as ExcerciseEntity).loads,
       },
       series,
       reps,

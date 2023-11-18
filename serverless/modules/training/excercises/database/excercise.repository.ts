@@ -14,7 +14,7 @@ async function createExcercise(model: Excercise) {
 
   await db.collection<ExcerciseEntity>("excercises").insertOne(entity);
 
-  client.close();
+  await client.close();
 
   return toModel(entity);
 }
@@ -27,15 +27,30 @@ async function getExcercises(): Promise<Excercise[]> {
     .collection("excercises")
     .find()
     .toArray()) as unknown as ExcerciseEntity[];
-  
-  client.close()
+
+  await client.close();
 
   return excercises.map((e) => toModel(e));
+}
+
+async function registerExcerciseLoad(excerciseId: string, weight: number) {
+  const entry = new Map<string, number>()
+  entry.set(new Date().toDateString(), weight)
+
+  await client.connect();
+  const db = client.db();
+
+  await db
+    .collection<ExcerciseEntity>("excercises")
+    .updateOne({ _id: excerciseId }, { $set: { loads: entry } });  
+
+  await client.close();
 }
 
 const ExcerciseRepository = {
   createExcercise,
   getExcercises,
+  registerExcerciseLoad,
 };
 
 export default ExcerciseRepository;

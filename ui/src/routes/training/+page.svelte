@@ -5,9 +5,11 @@
 	import { TrainingService } from '$lib/services/training.service';
 	import type { Training } from '$lib/models/training.model';
 	import { onMount } from 'svelte';
+	import type { Excercise } from '$lib/models/excercise.model';
 
 	type PageData = {
 		routine: Routine;
+		excercises: Excercise[];
 	};
 
 	export let data: PageData;

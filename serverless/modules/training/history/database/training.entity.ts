@@ -13,9 +13,8 @@ export const trainingSchema = new Schema<TrainingEntity>({
   _id: { type: String, required: true },
   date: { type: Date, required: true },
   routineId: { type: String, required: true },
-  workoutId: { type: String, required: true},
+  workoutId: { type: String, required: true },
 });
-
 
 export function toModel(entity: TrainingEntity): Training {
   return {
@@ -28,7 +27,7 @@ export function toModel(entity: TrainingEntity): Training {
 export function toEntity(model: Training): TrainingEntity {
   return {
     _id: model.id ?? uuidv4(),
-    date: model.date,
+    date: model.date ?? new Date().toISOString(),
     routineId: model.routineId,
     workoutId: model.workoutId,
   };

@@ -13,7 +13,7 @@ async function registerTraining(model: Training) {
 
   await db.collection<TrainingEntity>("trainings").insertOne(entity);
 
-  client.close();
+  await client.close();
 
   return toModel(entity);
 }
